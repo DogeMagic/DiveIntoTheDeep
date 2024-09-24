@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name = "TeleOp")
-public class Teleop extends OpMode {
+@TeleOp(name = "bocchi")
+public class bocchi extends OpMode {
 
     DcMotor fl;
     DcMotor bl;
