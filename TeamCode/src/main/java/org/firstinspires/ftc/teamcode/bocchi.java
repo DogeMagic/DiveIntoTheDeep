@@ -12,6 +12,7 @@ public class bocchi extends OpMode {
     DcMotor bl;
     DcMotor fr;
     DcMotor br;
+    Servo Claw;
 
     @Override
     public void init() {
