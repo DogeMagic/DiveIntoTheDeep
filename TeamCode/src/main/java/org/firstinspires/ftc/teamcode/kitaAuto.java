@@ -52,5 +52,72 @@ public class kitaAuto extends LinearOpMode {
         fl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }//strafing encoders
+    public void encoderStrafe(double speed, double leftInches, double rightInches, double timeoutS){
+
+        int newflTarget;
+        int newfrTarget;
+        int newblTarget;
+        int newbrTarget;
+
+        if (opModeIsActive()) {
+
+            // Determine new target position, and pass to motor controller
+            // For strafing one side's wheels 'attract' each other while the other side 'repels' each other
+            //The positive value will make the robot go to the left with current arrangement
+            newflTarget = fl.getCurrentPosition() - (int)(leftInches * COUNTS_PER_INCH);
+            newfrTarget = fr.getCurrentPosition() + (int)(rightInches * COUNTS_PER_INCH);
+            newblTarget = bl.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            newbrTarget = br.getCurrentPosition() - (int)(rightInches * COUNTS_PER_INCH);
+            fl.setTargetPosition(newflTarget);
+            fr.setTargetPosition(newfrTarget);
+            bl.setTargetPosition(newblTarget);
+            br.setTargetPosition(newbrTarget);
+
+            // Turn On RUN_TO_POSITION
+            fr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            fl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            br.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            bl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            runtime.reset();
+            fr.setPower(Math.abs(speed));
+            fl.setPower(Math.abs(speed));
+            br.setPower(Math.abs(speed));
+            bl.setPower(Math.abs(speed));
+
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
+            // its target position, the motion will stop.  This is "safer" in the event that the robot will
+            // always end the motion as soon as possible.
+            // However, if you require that BOTH motors have finished their moves before the robot continues
+            // onto the next step, use (isBusy() || isBusy()) in the loop test.
+            while (opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    (fr.isBusy() && br.isBusy() && bl.isBusy() && fl.isBusy())) {
+
+                // Display it for the driver.
+                telemetry.addData("Running to",  " %7d :%7d :%7d :%7d", newfrTarget,  newflTarget, newbrTarget, newblTarget);
+                telemetry.addData("Currently at",  " at %7d :%7d :%7d :%7d", newfrTarget, newflTarget, newbrTarget, newblTarget,
+                        fr.getCurrentPosition(), fl.getCurrentPosition(), br.getCurrentPosition(), bl.getCurrentPosition());
+                telemetry.update();
+            }
+
+            // Stop all motion;
+            fr.setPower(0);
+            fl.setPower(0);
+            br.setPower(0);
+            bl.setPower(0);
+
+            // Turn off RUN_TO_POSITION
+            fr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            fl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            sleep(250);   // optional pause after each move.
+        }
     }
 }
+
