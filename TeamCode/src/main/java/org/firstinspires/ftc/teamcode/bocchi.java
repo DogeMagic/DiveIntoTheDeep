@@ -16,10 +16,10 @@ public class bocchi extends OpMode {
 
     @Override
     public void init() {
-        fl = hardwareMap.dcMotor.get("fL");
-        bl = hardwareMap.dcMotor.get("bL");
-        fr = hardwareMap.dcMotor.get("fR");
-        br = hardwareMap.dcMotor.get("bR");
+        fl = hardwareMap.dcMotor.get("fl");
+        bl = hardwareMap.dcMotor.get("bl");
+        fr = hardwareMap.dcMotor.get("fl");
+        br = hardwareMap.dcMotor.get("bl");
 
         fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
