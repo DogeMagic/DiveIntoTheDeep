@@ -52,22 +52,23 @@ public class bocchi extends OpMode {
 
         //Side speed Right
         if (gamepad1.right_bumper) {
-            fl.setPower(-.9);
-            bl.setPower(.9);
-            fr.setPower(-.9);
-            br.setPower(.9);
+            fl.setPower(-.10);
+            bl.setPower(.10);
+            fr.setPower(-.10);
+            br.setPower(.10);
         } else {
             fl.setPower(0);
             bl.setPower(0);
             fr.setPower(0);
             br.setPower(0);
         }
+
         //Side speed Left
         if (gamepad1.left_bumper) {
-            fl.setPower(.9);
-            bl.setPower(-.9);
-            fr.setPower(.9);
-            br.setPower(-.9);
+            fl.setPower(.10);
+            bl.setPower(-.10);
+            fr.setPower(.10);
+            br.setPower(-.10);
         } else {
             fl.setPower(0);
             bl.setPower(0);
