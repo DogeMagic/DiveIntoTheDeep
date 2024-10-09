@@ -84,7 +84,7 @@ public class ElizaAuto extends LinearOpMode {
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         encoderDrive(DRIVE_SPEED,  1,  1, 5.0);  // S1: Forward 1 Inch with 5 Sec timeout
         encoderStrafe(DRIVE_SPEED, -40, -40, 5.0);  // S2: Strafe Right 40 Inches with 4 Sec timeout
-        encoderDrive(DRIVE_SPEED, 1, 1, );
+        encoderDrive(DRIVE_SPEED, 1, 1, 1.0);
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
