@@ -17,10 +17,10 @@ public class fieldcentricRyo extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         // Declare our motors
         // Make sure your ID's match your configuration
-        DcMotor leftFront = hardwareMap.dcMotor.get("lF");
-        DcMotor leftBack = hardwareMap.dcMotor.get("lB");
-        DcMotor rightFront = hardwareMap.dcMotor.get("rF");
-        DcMotor rightBack = hardwareMap.dcMotor.get("rB");
+        DcMotor leftFront = hardwareMap.dcMotor.get("fl");
+        DcMotor leftBack = hardwareMap.dcMotor.get("bl");
+        DcMotor rightFront = hardwareMap.dcMotor.get("fr");
+        DcMotor rightBack = hardwareMap.dcMotor.get("br");
 
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
