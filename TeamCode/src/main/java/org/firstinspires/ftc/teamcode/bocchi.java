@@ -1,13 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "bocchi")
 public class bocchi extends OpMode {
-
+    IMU imu;
     DcMotor fl;
     DcMotor bl;
     DcMotor fr;
@@ -20,6 +22,7 @@ public class bocchi extends OpMode {
         bl = hardwareMap.dcMotor.get("bl");
         fr = hardwareMap.dcMotor.get("fr");
         br = hardwareMap.dcMotor.get("br");
+        imu = hardwareMap.get(IMU.class, "IMU");
 
         fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
@@ -52,10 +55,10 @@ public class bocchi extends OpMode {
 
         //Side speed Right
         if (gamepad1.right_bumper) {
-            fl.setPower(-.10);
-            bl.setPower(.10);
-            fr.setPower(-.10);
-            br.setPower(.10);
+            fl.setPower(-1);
+            bl.setPower(1);
+            fr.setPower(-1);
+            br.setPower(1);
         } else {
             fl.setPower(0);
             bl.setPower(0);
@@ -65,10 +68,10 @@ public class bocchi extends OpMode {
 
         //Side speed Left
         if (gamepad1.left_bumper) {
-            fl.setPower(.10);
-            bl.setPower(-.10);
-            fr.setPower(.10);
-            br.setPower(-.10);
+            fl.setPower(1);
+            bl.setPower(-1);
+            fr.setPower(1);
+            br.setPower(-1);
         } else {
             fl.setPower(0);
             bl.setPower(0);
