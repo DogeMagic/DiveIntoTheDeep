@@ -18,7 +18,7 @@ public class odometryKijika extends LinearOpMode {
     DcMotor right_front, right_back, left_front, left_back;
     DcMotor verticalLeft, verticalRight, horizontal;
     BNO055IMU imu;
-    String rfName = "rF", rbName = "rB", lfName = "lF", lbName = "lB";
+    String rfName = "fr", rbName = "br", lfName = "fl", lbName = "bl";
     String verticalLeftEncoderName = lfName, verticalRightEncoderName = rfName, horizontalEncoderName = rbName;
     final double PIVOT_SPEED = 1;
     final double COUNTS_PER_INCH = 537.7;
@@ -146,10 +146,10 @@ public class odometryKijika extends LinearOpMode {
         return (-imu.getAngularOrientation().firstAngle);
     }
 
-    private void setPowerAll(double rf, double rb, double lf, double lb) {
-        right_front.setPower(rf);
-        right_back.setPower(rb);
-        left_front.setPower(lf);
-        left_back.setPower(lb);
+    private void setPowerAll(double fr, double br, double fl, double bl) {
+        right_front.setPower(fr);
+        right_back.setPower(br);
+        left_front.setPower(fl);
+        left_back.setPower(bl);
     }
 }
