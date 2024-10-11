@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "bocchi")
 public class bocchi extends OpMode {
-    IMU imu;
+    BNO055IMU imu;
     DcMotor fl;
     DcMotor bl;
     DcMotor fr;
@@ -24,7 +24,7 @@ public class bocchi extends OpMode {
         bl = hardwareMap.dcMotor.get("bl");
         fr = hardwareMap.dcMotor.get("fr");
         br = hardwareMap.dcMotor.get("br");
-        imu = hardwareMap.get(IMU.class, "IMU");
+        imu = hardwareMap.get(BNO055IMU.class, "IMU");
         lift = hardwareMap.dcMotor.get("lift");
         fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
@@ -108,5 +108,5 @@ public class bocchi extends OpMode {
             Claw.setPosition(.8);
 
         }
-        }
     }
+}
