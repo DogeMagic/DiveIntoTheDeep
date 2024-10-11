@@ -90,7 +90,7 @@ public class bocchi extends OpMode {
         } else {
             lift.setPower(0);
         }
-        // Intake out
+        // claw balony
         if (gamepad2.dpad_left) {
             Claw.setPosition(0);
 
