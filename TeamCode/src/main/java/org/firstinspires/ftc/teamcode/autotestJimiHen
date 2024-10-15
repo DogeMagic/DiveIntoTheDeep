@@ -7,10 +7,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 @Autonomous(name = "AutoDrive")
 public class AutoDrive extends LinearOpMode {
 
-    DcMotor lf;
-    DcMotor lb;
-    DcMotor rf;
-    DcMotor rb;
+    DcMotor fl;
+    DcMotor bl;
+    DcMotor fr;
+    DcMotor br;
 
     @Override
     public void runOpMode() throws InterruptedException {
