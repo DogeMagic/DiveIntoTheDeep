@@ -15,7 +15,7 @@ import java.io.File;
 
 @Autonomous(name = "Odometry System Calibration", group = "Calibration")
 public class odometryKijika extends LinearOpMode {
-    DcMotor right_front, right_back, left_front, left_back;
+    DcMotor fr, br, fl, bl;
     DcMotor verticalLeft, verticalRight, horizontal;
     BNO055IMU imu;
     String rfName = "fr", rbName = "br", lfName = "fl", lbName = "bl";
@@ -49,10 +49,10 @@ public class odometryKijika extends LinearOpMode {
         waitForStart();
 
         while (getZAngle() < 90 && opModeIsActive()) {
-            right_front.setPower(PIVOT_SPEED);
-            right_back.setPower(PIVOT_SPEED);
-            left_front.setPower(PIVOT_SPEED);
-            left_back.setPower(PIVOT_SPEED);
+            fr.setPower(PIVOT_SPEED);
+            br.setPower(PIVOT_SPEED);
+            fl.setPower(PIVOT_SPEED);
+            bl.setPower(PIVOT_SPEED);
 
             if (getZAngle() < 60) {
                 setPowerAll(PIVOT_SPEED, PIVOT_SPEED, PIVOT_SPEED, PIVOT_SPEED);
@@ -99,24 +99,24 @@ public class odometryKijika extends LinearOpMode {
     }
 
     private void initHardwareMap(String rfName, String rbName, String lfName, String lbName, String vlEncoderName, String vrEncoderName, String hEncoderName) {
-        right_front = hardwareMap.dcMotor.get(rfName);
-        right_back = hardwareMap.dcMotor.get(rbName);
-        left_front = hardwareMap.dcMotor.get(lfName);
-        left_back = hardwareMap.dcMotor.get(lbName);
+        fr = hardwareMap.dcMotor.get(rfName);
+        br = hardwareMap.dcMotor.get(rbName);
+        fl = hardwareMap.dcMotor.get(lfName);
+        bl = hardwareMap.dcMotor.get(lbName);
 
         verticalLeft = hardwareMap.dcMotor.get(vlEncoderName);
         verticalRight = hardwareMap.dcMotor.get(vrEncoderName);
         horizontal = hardwareMap.dcMotor.get(hEncoderName);
 
-        right_front.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        right_back.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        left_front.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        left_back.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        right_front.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        right_back.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        left_front.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        left_back.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        fr.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        br.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        fl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        bl.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         verticalLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         verticalRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -126,15 +126,15 @@ public class odometryKijika extends LinearOpMode {
         verticalRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         horizontal.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        right_front.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        right_back.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        left_front.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        left_back.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        left_front.setDirection(DcMotorSimple.Direction.REVERSE);
-        left_back.setDirection(DcMotorSimple.Direction.REVERSE);
-        right_front.setDirection(DcMotorSimple.Direction.REVERSE);
-        right_back.setDirection(DcMotorSimple.Direction.REVERSE);
+        fl.setDirection(DcMotorSimple.Direction.REVERSE);
+        bl.setDirection(DcMotorSimple.Direction.REVERSE);
+        fr.setDirection(DcMotorSimple.Direction.REVERSE);
+        br.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
         telemetry.addData("Status", "Hardware Map Init Complete");
@@ -146,10 +146,10 @@ public class odometryKijika extends LinearOpMode {
         return (-imu.getAngularOrientation().firstAngle);
     }
 
-    private void setPowerAll(double fr, double br, double fl, double bl) {
-        right_front.setPower(fr);
-        right_back.setPower(br);
-        left_front.setPower(fl);
-        left_back.setPower(bl);
+    private void setPowerAll(double rf, double rb, double lf, double lb) {
+        fr.setPower(rf);
+        br.setPower(rb);
+        fl.setPower(lf);
+        bl.setPower(lb);
     }
 }
