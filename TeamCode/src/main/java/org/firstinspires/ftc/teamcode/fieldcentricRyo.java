@@ -80,7 +80,8 @@ public class bocchi extends OpMode {
     DcMotor bl;
     DcMotor fr;
     DcMotor br;
-    Servo Claw;
+    Servo leftClaw;
+    servo rightClaw;
     DcMotor lift;
 
 
@@ -90,6 +91,8 @@ public class bocchi extends OpMode {
         bl = hardwareMap.dcMotor.get("bl");
         fr = hardwareMap.dcMotor.get("fr");
         br = hardwareMap.dcMotor.get("br");
+        leftClaw = hardwareMap.servo.get("LC");
+        rightClaw = hardwareMap.servo.get("RC");
         lift = hardwareMap.dcMotor.get("lift");
         fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
@@ -162,20 +165,23 @@ public class bocchi extends OpMode {
         }
         // Intake out
         if (gamepad2.dpad_left) {
-            Claw.setPosition(0);
+            leftClaw.setPosition(0); // Neutral = 0
+            rightClaw.setPosition(1); // Neutral = 1
 
         }
         else if (gamepad2.b){ //close all
-            Claw.setPosition(.1);
+            leftClaw.setPosition(.1);
+            rightClaw.setPosition(.1); 
         }
         else if (gamepad2.a){ //open all
-            Claw.setPosition(.2);
+            leftClaw.setPosition(.2);
+            rightClaw.setPosition(.2);
         }
         else if (gamepad2.x) {
-            Claw.setPosition(.2);
+            leftClaw.setPosition(.2);
 
         } else if (gamepad2.y) {
-            Claw.setPosition(.8);
+            rightClaw.setPosition(.8);
 
         }
     }
