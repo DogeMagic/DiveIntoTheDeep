@@ -122,29 +122,34 @@ public class bocchi extends OpMode {
         }
 
         //Side speed Right
-        if (gamepad1.right_bumper) {
-            fl.setPower(-1);
-            bl.setPower(1);
-            fr.setPower(-1);
-            br.setPower(1);
+         //Strafe Right
+        if (Math.abs(-gamepad1.right_trigger) > .2) {
+            lf.setPower(-gamepad1.right_trigger * 1);
+            br.setPower(gamepad1.right_trigger * 1);
+            bl.setPower(gamepad1.right_trigger * 1);
+            //band-aid :)
+                 fr.setPower(-gamepad1.right_trigger * 5);
+
         } else {
-            fl.setPower(0);
-            bl.setPower(0);
             fr.setPower(0);
+            bl.setPower(0);
             br.setPower(0);
-        }
+            fr.setPower(0);
+
 
         //Side speed Left
-        if (gamepad1.left_bumper) {
-            fl.setPower(1);
-            bl.setPower(-1);
-            fr.setPower(1);
-            br.setPower(-1);
+        //Strafe Left
+        if (Math.abs(gamepad1.left_trigger) > .2) {
+            fl.setPower(gamepad1.left_trigger * 1);
+            br.setPower(-gamepad1.left_trigger * 1);
+            bl.setPower(-gamepad1.left_trigger * 1);
+            fr.setPower(gamepad1.left_trigger * 1);
+
         } else {
-            fl.setPower(0);
-            bl.setPower(0);
             fr.setPower(0);
             br.setPower(0);
+            bl.setPower(0);
+            fl.setPower(0);
         }
         //up and down p2
         //Lift
