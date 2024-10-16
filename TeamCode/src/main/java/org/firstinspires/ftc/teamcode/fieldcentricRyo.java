@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @TeleOp
@@ -73,105 +76,118 @@ public class fieldcentricRyo extends LinearOpMode {
             fr.setPower(frontRightPower);
             br.setPower(backRightPower);
 
-//Added TeleOp into the field centric if it doesn't work we will go back to og             
-@TeleOp(name = "bocchi")
-public class bocchi extends OpMode {
-    DcMotor fl;
-    DcMotor bl;
-    DcMotor fr;
-    DcMotor br;
-    Servo Claw;
-    DcMotor lift;
+//Added TeleOp into the field centric if it doesn't work we will go back to og
+            @TeleOp(name = "bocchi")
+            public class bocchi extends OpMode {
+                DcMotor fl;
+                DcMotor bl;
+                DcMotor fr;
+                DcMotor br;
+                Servo leftClaw;
+                Servo rightClaw;
+                DcMotor lift;
+
+                @Override
+                public void init() {
+                    fl = hardwareMap.dcMotor.get("fl");
+                    bl = hardwareMap.dcMotor.get("bl");
+                    fr = hardwareMap.dcMotor.get("fr");
+                    br = hardwareMap.dcMotor.get("br");
+                    leftClaw = hardwareMap.servo.get("LC");
+                    rightClaw = hardwareMap.servo.get("RC");
+                    lift = hardwareMap.dcMotor.get("lift");
+                    fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                    fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                    bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                    br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                    lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
 
-    @Override
-    public void init() {
-        fl = hardwareMap.dcMotor.get("fl");
-        bl = hardwareMap.dcMotor.get("bl");
-        fr = hardwareMap.dcMotor.get("fr");
-        br = hardwareMap.dcMotor.get("br");
-        lift = hardwareMap.dcMotor.get("lift");
-        fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                }
+
+                @Override
+                public void loop() {
+
+                    //Front back Left
+                    if (Math.abs(-gamepad1.left_stick_y) > .2) {
+                        fl.setPower(gamepad1.left_stick_y * 1);
+                        bl.setPower(gamepad1.left_stick_y * 1);
+                    } else {
+                        fl.setPower(0);
+                        bl.setPower(0);
+                    }
+
+                    //Front back Right
+                    if (Math.abs(gamepad1.right_stick_y) > .2) {
+                        fr.setPower(-gamepad1.right_stick_y * 1);
+                        br.setPower(-gamepad1.right_stick_y * 1);
+                    } else {
+                        fr.setPower(0);
+                        br.setPower(0);
+                    }
+
+                    //Side speed Right
+                    //Strafe Right
+                    if (Math.abs(-gamepad1.right_trigger) > .2) {
+                        fl.setPower(-gamepad1.right_trigger * 1);
+                        br.setPower(gamepad1.right_trigger * 1);
+                        bl.setPower(gamepad1.right_trigger * 1);
+                        //band-aid :)
+                        fr.setPower(-gamepad1.right_trigger * 1);
+
+                    } else {
+                        fr.setPower(0);
+                        bl.setPower(0);
+                        br.setPower(0);
+                        fr.setPower(0);
 
 
-    }
+                        //Side speed Left
+                        //Strafe Left
+                        if (Math.abs(gamepad1.left_trigger) > .2) {
+                            fl.setPower(gamepad1.left_trigger * 1);
+                            br.setPower(-gamepad1.left_trigger * 1);
+                            bl.setPower(-gamepad1.left_trigger * 1);
+                            fr.setPower(gamepad1.left_trigger * 1);
 
-    @Override
-    public void loop() {
+                        } else {
+                            fr.setPower(0);
+                            br.setPower(0);
+                            bl.setPower(0);
+                            fl.setPower(0);
+                        }
+                        //up and down p2
+                        //Lift
+                        if (gamepad2.left_bumper) {
+                            lift.setPower(-.9);
+                        } else if (gamepad2.right_bumper) {
+                            lift.setPower(.9);
+                        } else {
+                            lift.setPower(0);
+                        }
+                        // Intake out
+                        if (gamepad2.dpad_left) {
+                            leftClaw.setPosition(1); // Neutral = 0
+                            rightClaw.setPosition(1); // Neutral = 1
 
-        //Front back Left
-        if (Math.abs(-gamepad1.left_stick_y) > .2) {
-            fl.setPower(gamepad1.left_stick_y * 1);
-            bl.setPower(gamepad1.left_stick_y * 1);
-        } else {
-            fl.setPower(0);
-            bl.setPower(0);
-        }
+                        } else if (gamepad2.b) { //close all
+                            leftClaw.setPosition(.1);
+                            rightClaw.setPosition(.1);
 
-        //Front back Right
-        if (Math.abs(gamepad1.right_stick_y) > .2) {
-            fr.setPower(-gamepad1.right_stick_y * 1);
-            br.setPower(-gamepad1.right_stick_y * 1);
-        } else {
-            fr.setPower(0);
-            br.setPower(0);
-        }
+                        } else if (gamepad2.a) { //open all
+                            leftClaw.setPosition(.2);
+                            rightClaw.setPosition(.2);
 
-        //Side speed Right
-        if (gamepad1.right_bumper) {
-            fl.setPower(-1);
-            bl.setPower(1);
-            fr.setPower(-1);
-            br.setPower(1);
-        } else {
-            fl.setPower(0);
-            bl.setPower(0);
-            fr.setPower(0);
-            br.setPower(0);
-        }
+                        } else if (gamepad2.x) {
+                            leftClaw.setPosition(.2);
 
-        //Side speed Left
-        if (gamepad1.left_bumper) {
-            fl.setPower(1);
-            bl.setPower(-1);
-            fr.setPower(1);
-            br.setPower(-1);
-        } else {
-            fl.setPower(0);
-            bl.setPower(0);
-            fr.setPower(0);
-            br.setPower(0);
-        }
-        //up and down p2
-        //Lift
-        if (gamepad2.left_bumper) {
-            lift.setPower(-.9);
-        } else if (gamepad2.right_bumper) {
-            lift.setPower(.9);
-        } else {
-            lift.setPower(0);
-        }
-        // Intake out
-        if (gamepad2.dpad_left) {
-            Claw.setPosition(0);
+                        } else if (gamepad2.y) {
+                            rightClaw.setPosition(.8);
 
-        }
-        else if (gamepad2.b){ //close all
-            Claw.setPosition(.1);
-        }
-        else if (gamepad2.a){ //open all
-            Claw.setPosition(.2);
-        }
-        else if (gamepad2.x) {
-            Claw.setPosition(.2);
-
-        } else if (gamepad2.y) {
-            Claw.setPosition(.8);
-
+                        }
+                    }
+                }
+            }
         }
     }
 }
