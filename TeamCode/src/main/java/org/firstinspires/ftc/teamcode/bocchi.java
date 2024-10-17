@@ -98,10 +98,9 @@ public class bocchi extends OpMode {
             rightLift.setPower(0);
         }
         // Intake out
-        if (gamepad2.dpad_left) {
+        if (gamepad2.dpad_left) { //might have to delete this
             leftClaw.setPosition(0);
             rightClaw.setPosition(0);
-
         }
         else if (gamepad2.b){ //close all
             leftClaw.setPosition(.1);
