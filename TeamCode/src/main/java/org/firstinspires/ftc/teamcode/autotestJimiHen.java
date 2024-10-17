@@ -4,8 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name = "AutoDrive")
-public class AutoDrive extends LinearOpMode {
+@Autonomous(name = "autotestJimiHen")
+public class autotestJimiHen extends LinearOpMode {
 
     DcMotor fl;
     DcMotor bl;
@@ -15,15 +15,15 @@ public class AutoDrive extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         {
-            lf=hardwareMap.dcMotor.get("lf");
-            lb=hardwareMap.dcMotor.get("lb");
-            rf=hardwareMap.dcMotor.get("rf");
-            rb=hardwareMap.dcMotor.get("rb");
+            fl=hardwareMap.dcMotor.get("fl");
+            bl=hardwareMap.dcMotor.get("bl");
+            fr=hardwareMap.dcMotor.get("fr");
+            br=hardwareMap.dcMotor.get("br");
             waitForStart();
-            lf.setPower(-0.35);
-            lb.setPower(-0.35);
-            rf.setPower(0.35);
-            rb.setPower(0.35);
+            fl.setPower(-0.45);
+            bl.setPower(-0.45);
+            fr.setPower(0.45);
+            br.setPower(0.45);
             sleep(1500);
         }
     }

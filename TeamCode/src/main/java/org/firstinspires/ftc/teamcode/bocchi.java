@@ -11,8 +11,10 @@ public class bocchi extends OpMode {
     DcMotor bl;
     DcMotor fr;
     DcMotor br;
-    Servo Claw;
-    DcMotor lift;
+    DcMotor leftLift;
+    DcMotor rightLift;
+    Servo rightClaw;
+    Servo leftClaw;
 
 
     @Override
@@ -21,12 +23,16 @@ public class bocchi extends OpMode {
         bl = hardwareMap.dcMotor.get("bl");
         fr = hardwareMap.dcMotor.get("fr");
         br = hardwareMap.dcMotor.get("br");
-        lift = hardwareMap.dcMotor.get("lift");
+        leftClaw =hardwareMap.servo.get("LC");
+        rightClaw = hardwareMap.servo.get("RC");
+        leftLift = hardwareMap.dcMotor.get("LL");
+        rightLift = hardwareMap.dcMotor.get("RL");
         fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
 
     }
@@ -80,28 +86,35 @@ public class bocchi extends OpMode {
         //up and down p2
         //Lift
         if (gamepad2.left_bumper) {
-            lift.setPower(-.9);
+            leftLift.setPower(-.9);
+            rightLift.setPower(-.9);
+            
         } else if (gamepad2.right_bumper) {
-            lift.setPower(.9);
+            leftLift.setPower(.9);
+            rightLift.setPower(.9);
+            
         } else {
-            lift.setPower(0);
+            leftLift.setPower(0);
+            rightLift.setPower(0);
         }
-        // claw balony
-        if (gamepad2.dpad_left) {
-            Claw.setPosition(0);
-
+        // Intake out
+        if (gamepad2.dpad_left) { //might have to delete this
+            leftClaw.setPosition(0);
+            rightClaw.setPosition(1);
         }
         else if (gamepad2.b){ //close all
-            Claw.setPosition(.1);
+            leftClaw.setPosition(.1);
+            rightClaw.setPosition(.92);
         }
         else if (gamepad2.a){ //open all
-            Claw.setPosition(.2);
+            rightClaw.setPosition(.8);
+            leftClaw.setPosition(.2;
         }
         else if (gamepad2.x) {
-            Claw.setPosition(.2);
+            leftClaw.setPosition(.2);
 
         } else if (gamepad2.y) {
-            Claw.setPosition(.8);
+            rightClaw.setPosition(.8);
 
         }
     }
