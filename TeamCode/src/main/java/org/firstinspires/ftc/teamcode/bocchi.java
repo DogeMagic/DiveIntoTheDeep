@@ -14,7 +14,7 @@ public class bocchi extends OpMode {
     DcMotor leftLift;
     DcMotor rightLift;
     Servo rightClaw;
-    servo leftClaw
+    servo leftClaw;
 
 
     @Override
@@ -113,7 +113,7 @@ public class bocchi extends OpMode {
             leftClaw.setPosition(.2);
 
         } else if (gamepad2.y) {
-            rightClaw.setPosition(.8);
+            rightClaw.setPosition(.2);
 
         }
     }
