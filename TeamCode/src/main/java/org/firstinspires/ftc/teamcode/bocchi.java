@@ -14,7 +14,7 @@ public class bocchi extends OpMode {
     DcMotor leftLift;
     DcMotor rightLift;
     Servo rightClaw;
-    servo leftClaw;
+    Servo leftClaw;
 
 
     @Override
@@ -23,6 +23,8 @@ public class bocchi extends OpMode {
         bl = hardwareMap.dcMotor.get("bl");
         fr = hardwareMap.dcMotor.get("fr");
         br = hardwareMap.dcMotor.get("br");
+        leftClaw =hardwareMap.servo.get("LC");
+        rightClaw = hardwareMap.servo.get("RC");
         leftLift = hardwareMap.dcMotor.get("LL");
         rightLift = hardwareMap.dcMotor.get("RL");
         fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
@@ -106,14 +108,14 @@ public class bocchi extends OpMode {
             rightClaw.setPosition(.1);
         }
         else if (gamepad2.a){ //open all
-            rightClaw.setPosition(.2);
-            leftClaw.setPosition(.2);
+            rightClaw.setPosition(.1);
+            leftClaw.setPosition(.1);
         }
         else if (gamepad2.x) {
             leftClaw.setPosition(.2);
 
         } else if (gamepad2.y) {
-            rightClaw.setPosition(.2);
+            rightClaw.setPosition(.1);
 
         }
     }

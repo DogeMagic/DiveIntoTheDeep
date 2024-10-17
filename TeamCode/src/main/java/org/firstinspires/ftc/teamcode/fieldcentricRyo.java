@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.hardware.Servo;
+
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @TeleOp
@@ -74,115 +77,116 @@ public class fieldcentricRyo extends LinearOpMode {
             br.setPower(backRightPower);
 
 //Added TeleOp into the field centric if it doesn't work we will go back to og             
-@TeleOp(name = "bocchi")
-public class bocchi extends OpMode {
-    DcMotor fl;
-    DcMotor bl;
-    DcMotor fr;
-    DcMotor br;
-    Servo leftClaw;
-    servo rightClaw;
-    DcMotor lift;
+            @TeleOp(name = "bocchi")
+            class bocchi extends OpMode {
+                DcMotor fl;
+                DcMotor bl;
+                DcMotor fr;
+                DcMotor br;
+                Servo leftClaw;
+                Servo rightClaw;
+                DcMotor lift;
 
 
-    @Override
-    public void init() {
-        fl = hardwareMap.dcMotor.get("fl");
-        bl = hardwareMap.dcMotor.get("bl");
-        fr = hardwareMap.dcMotor.get("fr");
-        br = hardwareMap.dcMotor.get("br");
-        leftClaw = hardwareMap.servo.get("LC");
-        rightClaw = hardwareMap.servo.get("RC");
-        lift = hardwareMap.dcMotor.get("lift");
-        fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                @Override
+                public void init() {
+                    fl = hardwareMap.dcMotor.get("fl");
+                    bl = hardwareMap.dcMotor.get("bl");
+                    fr = hardwareMap.dcMotor.get("fr");
+                    br = hardwareMap.dcMotor.get("br");
+                    leftClaw = hardwareMap.servo.get("LC");
+                    rightClaw = hardwareMap.servo.get("RC");
+                    lift = hardwareMap.dcMotor.get("lift");
+                    fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                    fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                    bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                    br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+                    lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
 
-    }
+                }
 
-    @Override
-    public void loop() {
+                @Override
+                public void loop() {
 
-        //Front back Left
-        if (Math.abs(-gamepad1.left_stick_y) > .2) {
-            fl.setPower(gamepad1.left_stick_y * 1);
-            bl.setPower(gamepad1.left_stick_y * 1);
-        } else {
-            fl.setPower(0);
-            bl.setPower(0);
-        }
+                    //Front back Left
+                    if (Math.abs(-gamepad1.left_stick_y) > .2) {
+                        fl.setPower(gamepad1.left_stick_y * 1);
+                        bl.setPower(gamepad1.left_stick_y * 1);
+                    } else {
+                        fl.setPower(0);
+                        bl.setPower(0);
+                    }
 
-        //Front back Right
-        if (Math.abs(gamepad1.right_stick_y) > .2) {
-            fr.setPower(-gamepad1.right_stick_y * 1);
-            br.setPower(-gamepad1.right_stick_y * 1);
-        } else {
-            fr.setPower(0);
-            br.setPower(0);
-        }
+                    //Front back Right
+                    if (Math.abs(gamepad1.right_stick_y) > .2) {
+                        fr.setPower(-gamepad1.right_stick_y * 1);
+                        br.setPower(-gamepad1.right_stick_y * 1);
+                    } else {
+                        fr.setPower(0);
+                        br.setPower(0);
+                    }
 
-        //Side speed Right
-         //Strafe Right
-        if (Math.abs(-gamepad1.right_trigger) > .2) {
-            lf.setPower(-gamepad1.right_trigger * 1);
-            br.setPower(gamepad1.right_trigger * 1);
-            bl.setPower(gamepad1.right_trigger * 1);
-            //band-aid :)
-                 fr.setPower(-gamepad1.right_trigger * 5);
+                    //Side speed Right
+                    //Strafe Right
+                    if (Math.abs(-gamepad1.right_trigger) > .2) {
+                        fl.setPower(-gamepad1.right_trigger * 1);
+                        br.setPower(gamepad1.right_trigger * 1);
+                        bl.setPower(gamepad1.right_trigger * 1);
+                        //band-aid :)
+                        fr.setPower(-gamepad1.right_trigger * 5);
 
-        } else {
-            fr.setPower(0);
-            bl.setPower(0);
-            br.setPower(0);
-            fr.setPower(0);
+                    } else {
+                        fr.setPower(0);
+                        bl.setPower(0);
+                        br.setPower(0);
+                        fr.setPower(0);
 
 
-        //Side speed Left
-        //Strafe Left
-        if (Math.abs(gamepad1.left_trigger) > .2) {
-            fl.setPower(gamepad1.left_trigger * 1);
-            br.setPower(-gamepad1.left_trigger * 1);
-            bl.setPower(-gamepad1.left_trigger * 1);
-            fr.setPower(gamepad1.left_trigger * 1);
+                        //Side speed Left
+                        //Strafe Left
+                        if (Math.abs(gamepad1.left_trigger) > .2) {
+                            fl.setPower(gamepad1.left_trigger * 1);
+                            br.setPower(-gamepad1.left_trigger * 1);
+                            bl.setPower(-gamepad1.left_trigger * 1);
+                            fr.setPower(gamepad1.left_trigger * 1);
 
-        } else {
-            fr.setPower(0);
-            br.setPower(0);
-            bl.setPower(0);
-            fl.setPower(0);
-        }
-        //up and down p2
-        //Lift
-        if (gamepad2.left_bumper) {
-            lift.setPower(-.9);
-        } else if (gamepad2.right_bumper) {
-            lift.setPower(.9);
-        } else {
-            lift.setPower(0);
-        }
-        // Intake out
-        if (gamepad2.dpad_left) {
-            leftClaw.setPosition(0); // Neutral = 0
-            rightClaw.setPosition(1); // Neutral = 1
+                        } else {
+                            fr.setPower(0);
+                            br.setPower(0);
+                            bl.setPower(0);
+                            fl.setPower(0);
+                        }
+                        //up and down p2
+                        //Lift
+                        if (gamepad2.left_bumper) {
+                            lift.setPower(-.9);
+                        } else if (gamepad2.right_bumper) {
+                            lift.setPower(.9);
+                        } else {
+                            lift.setPower(0);
+                        }
+                        // Intake out
+                        if (gamepad2.dpad_left) {
+                            leftClaw.setPosition(0); // Neutral = 0
+                            rightClaw.setPosition(1); // Neutral = 1
 
-        }
-        else if (gamepad2.b){ //close all
-            leftClaw.setPosition(.1);
-            rightClaw.setPosition(.1); 
-        }
-        else if (gamepad2.a){ //open all
-            leftClaw.setPosition(.2);
-            rightClaw.setPosition(.2);
-        }
-        else if (gamepad2.x) {
-            leftClaw.setPosition(.2);
+                        } else if (gamepad2.b) { //close all
+                            leftClaw.setPosition(.1);
+                            rightClaw.setPosition(.1);
+                        } else if (gamepad2.a) { //open all
+                            leftClaw.setPosition(.2);
+                            rightClaw.setPosition(.2);
+                        } else if (gamepad2.x) {
+                            leftClaw.setPosition(.2);
 
-        } else if (gamepad2.y) {
-            rightClaw.setPosition(.2);
+                        } else if (gamepad2.y) {
+                            rightClaw.setPosition(.2);
 
+                        }
+                    }
+                }
+            }
         }
     }
 }
