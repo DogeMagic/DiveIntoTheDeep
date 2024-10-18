@@ -60,10 +60,10 @@ public class bocchi extends OpMode {
 
         //Side speed Right
         if (gamepad1.right_bumper) {
-            fl.setPower(-1);
-            bl.setPower(1);
-            fr.setPower(-1);
-            br.setPower(1);
+            fl.setPower(-.7);
+            bl.setPower(.7);
+            fr.setPower(.7);
+            br.setPower(-.7);
         } else {
             fl.setPower(0);
             bl.setPower(0);
@@ -99,12 +99,12 @@ public class bocchi extends OpMode {
         }
         // Intake out
         if (gamepad2.b){ //close all
-            leftClaw.setPosition(1);
+            leftClaw.setPosition(0);
             rightClaw.setPosition(1);
         }
         else if (gamepad2.a){ //open all
-            rightClaw.setPosition(.10);
-            leftClaw.setPosition(.10);
+            rightClaw.setPosition(.5);
+            leftClaw.setPosition(.45);
         }
         else if (gamepad2.x) { //open left
             leftClaw.setPosition(.10);
