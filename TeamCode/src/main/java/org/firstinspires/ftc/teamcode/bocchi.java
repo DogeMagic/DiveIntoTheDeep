@@ -60,8 +60,8 @@ public class bocchi extends OpMode {
 
         //Side speed Right
         if (gamepad1.right_bumper) {
-            fl.setPower(-.7);
-            bl.setPower(.7);
+            fl.setPower(-1);
+            bl.setPower(1);
             fr.setPower(.7);
             br.setPower(-.7);
         } else {
