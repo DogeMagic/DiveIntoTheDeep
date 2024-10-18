@@ -104,7 +104,7 @@ public class bocchi extends OpMode {
         }
         else if (gamepad2.a){ //open all
             rightClaw.setPosition(.5);
-            leftClaw.setPosition(.45);
+            leftClaw.setPosition(.45); //no change
         }
         else if (gamepad2.x) { //open left
             leftClaw.setPosition(.10);
