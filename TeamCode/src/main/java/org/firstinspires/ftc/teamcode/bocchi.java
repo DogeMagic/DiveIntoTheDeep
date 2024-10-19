@@ -23,7 +23,7 @@ public class bocchi extends OpMode {
         bl = hardwareMap.dcMotor.get("bl");
         fr = hardwareMap.dcMotor.get("fr");
         br = hardwareMap.dcMotor.get("br");
-        leftClaw =hardwareMap.servo.get("LC");
+        leftClaw = hardwareMap.servo.get("LC");
         rightClaw = hardwareMap.servo.get("RC");
         leftLift = hardwareMap.dcMotor.get("LL");
         rightLift = hardwareMap.dcMotor.get("RL");
@@ -62,8 +62,8 @@ public class bocchi extends OpMode {
         if (gamepad1.right_bumper) {
             fl.setPower(-1);
             bl.setPower(1);
-            fr.setPower(.7);
-            br.setPower(-.7);
+            fr.setPower(1);
+            br.setPower(-1);
         } else {
             fl.setPower(0);
             bl.setPower(0);
@@ -75,8 +75,8 @@ public class bocchi extends OpMode {
         if (gamepad1.left_bumper) {
             fl.setPower(1);
             bl.setPower(-1);
-            fr.setPower(1);
-            br.setPower(-1);
+            fr.setPower(-1);
+            br.setPower(1);
         } else {
             fl.setPower(0);
             bl.setPower(0);
@@ -86,12 +86,12 @@ public class bocchi extends OpMode {
         //up and down p2
         //Lift
         if (gamepad2.left_bumper) {
-            leftLift.setPower(-.9);
-            rightLift.setPower(-.9);
+            leftLift.setPower(-.6);
+            rightLift.setPower(.6);
             
         } else if (gamepad2.right_bumper) {
-            leftLift.setPower(.9);
-            rightLift.setPower(.9);
+            leftLift.setPower(.2);
+            rightLift.setPower(-.2);
             
         } else {
             leftLift.setPower(0);
