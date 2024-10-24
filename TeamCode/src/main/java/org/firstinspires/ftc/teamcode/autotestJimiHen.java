@@ -15,15 +15,15 @@ public class autotestJimiHen extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         {
-            fl=hardwareMap.dcMotor.get("fl");
-            bl=hardwareMap.dcMotor.get("bl");
-            fr=hardwareMap.dcMotor.get("fr");
-            br=hardwareMap.dcMotor.get("br");
+            fl = hardwareMap.dcMotor.get("fl");
+            bl = hardwareMap.dcMotor.get("bl");
+            fr = hardwareMap.dcMotor.get("fr");
+            br = hardwareMap.dcMotor.get("br");
             waitForStart();
-            fl.setPower(-0.45);
-            bl.setPower(-0.45);
-            fr.setPower(0.45);
-            br.setPower(0.45);
+            fl.setPower(-0.50);
+            bl.setPower(-0.50);
+            fr.setPower(0.50);
+            br.setPower(0.50);
             sleep(1500);
         }
     }
