@@ -214,10 +214,10 @@ public class Michiyo {
         backRight.setPower(-.4);
     }
     public void StrafeRight() {
-        frontLeft.setPower(.4);
-        backLeft.setPower(-.4);
-        frontRight.setPower(-.4);
-        backRight.setPower(.4);
+        frontLeft.setPower(-.4);
+        backLeft.setPower(.4);
+        frontRight.setPower(.4);
+        backRight.setPower(-.4);
     }
 
 

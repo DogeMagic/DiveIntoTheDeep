@@ -42,8 +42,8 @@ public class bocchi extends OpMode {
 
         //Front back Left
         if (Math.abs(-gamepad1.left_stick_y) > .2) {
-            fl.setPower(gamepad1.left_stick_y * 1);
-            bl.setPower(gamepad1.left_stick_y * 1);
+            fl.setPower(gamepad1.left_stick_y * .50);
+            bl.setPower(gamepad1.left_stick_y * .50);
         } else {
             fl.setPower(0);
             bl.setPower(0);
@@ -51,8 +51,8 @@ public class bocchi extends OpMode {
 
         //Front back Right
         if (Math.abs(gamepad1.right_stick_y) > .2) {
-            fr.setPower(-gamepad1.right_stick_y * 1);
-            br.setPower(-gamepad1.right_stick_y * 1);
+            fr.setPower(-gamepad1.right_stick_y * .50);
+            br.setPower(-gamepad1.right_stick_y * .50);
         } else {
             fr.setPower(0);
             br.setPower(0);
