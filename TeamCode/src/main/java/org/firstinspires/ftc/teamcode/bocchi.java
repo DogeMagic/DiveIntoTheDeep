@@ -23,7 +23,7 @@ public class bocchi extends OpMode {
         bl = hardwareMap.dcMotor.get("bl");
         fr = hardwareMap.dcMotor.get("fr");
         br = hardwareMap.dcMotor.get("br");
-        leftClaw =hardwareMap.servo.get("LC");
+        leftClaw = hardwareMap.servo.get("LC");
         rightClaw = hardwareMap.servo.get("RC");
         leftLift = hardwareMap.dcMotor.get("LL");
         rightLift = hardwareMap.dcMotor.get("RL");
@@ -41,9 +41,9 @@ public class bocchi extends OpMode {
     public void loop() {
 
         //Front back Left
-        if (Math.abs(-gamepad1.left_stick_y) > .2) {
-            fl.setPower(gamepad1.left_stick_y * .50);
-            bl.setPower(gamepad1.left_stick_y * .50);
+        if (Math.abs(gamepad1.left_stick_y) > .2) {
+            fl.setPower(gamepad1.left_stick_y * -1);
+            bl.setPower(gamepad1.left_stick_y * 1);
         } else {
             fl.setPower(0);
             bl.setPower(0);
@@ -51,8 +51,8 @@ public class bocchi extends OpMode {
 
         //Front back Right
         if (Math.abs(gamepad1.right_stick_y) > .2) {
-            fr.setPower(-gamepad1.right_stick_y * .50);
-            br.setPower(-gamepad1.right_stick_y * .50);
+            fr.setPower(gamepad1.right_stick_y * -1);
+            br.setPower(gamepad1.right_stick_y * 1);
         } else {
             fr.setPower(0);
             br.setPower(0);
@@ -60,9 +60,9 @@ public class bocchi extends OpMode {
 
         //Side speed Right
         if (gamepad1.right_bumper) {
-            fl.setPower(-1);
+            fl.setPower(1);
             bl.setPower(1);
-            fr.setPower(-1);
+            fr.setPower(1);
             br.setPower(1);
         } else {
             fl.setPower(0);
@@ -73,9 +73,9 @@ public class bocchi extends OpMode {
 
         //Side speed Left
         if (gamepad1.left_bumper) {
-            fl.setPower(1);
+            fl.setPower(-1);
             bl.setPower(-1);
-            fr.setPower(1);
+            fr.setPower(-1);
             br.setPower(-1);
         } else {
             fl.setPower(0);
@@ -86,12 +86,12 @@ public class bocchi extends OpMode {
         //up and down p2
         //Lift
         if (gamepad2.left_bumper) {
-            leftLift.setPower(-.9);
-            rightLift.setPower(-.9);
+            leftLift.setPower(-.6);
+            rightLift.setPower(.6);
             
         } else if (gamepad2.right_bumper) {
-            leftLift.setPower(.9);
-            rightLift.setPower(.9);
+            leftLift.setPower(.2);
+            rightLift.setPower(-.2);
             
         } else {
             leftLift.setPower(0);
@@ -99,12 +99,12 @@ public class bocchi extends OpMode {
         }
         // Intake out
         if (gamepad2.b){ //close all
-            leftClaw.setPosition(1);
+            leftClaw.setPosition(0);
             rightClaw.setPosition(1);
         }
         else if (gamepad2.a){ //open all
-            rightClaw.setPosition(.10);
-            leftClaw.setPosition(.10);
+            rightClaw.setPosition(.5);
+            leftClaw.setPosition(.45);
         }
         else if (gamepad2.x) { //open left
             leftClaw.setPosition(.10);
