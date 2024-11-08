@@ -85,18 +85,20 @@ public class bocchi extends OpMode {
         }
         //up and down p2
         //Lift
+        // Needs to be faster down AND slower up
         if (gamepad2.left_bumper) {
-            leftLift.setPower(-.6);
-            rightLift.setPower(.6);
+            leftLift.setPower(-.2);
+            rightLift.setPower(.2);
             
         } else if (gamepad2.right_bumper) {
-            leftLift.setPower(.2);
-            rightLift.setPower(-.2);
+            leftLift.setPower(.6);
+            rightLift.setPower(-.6);
             
         } else {
             leftLift.setPower(0);
             rightLift.setPower(0);
         }
+
         // Intake out
         if (gamepad2.b){ //close all
             leftClaw.setPosition(0);

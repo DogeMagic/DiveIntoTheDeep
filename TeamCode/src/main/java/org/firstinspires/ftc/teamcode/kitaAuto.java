@@ -55,7 +55,6 @@ public class kitaAuto extends LinearOpMode {
 //Missing the part that makes the code work lmaoooooo
 
 //Add regular encoders
-        e
     }//strafing encoders
     public void encoderStrafe(double speed, double leftInches, double rightInches, double timeoutS){
 
