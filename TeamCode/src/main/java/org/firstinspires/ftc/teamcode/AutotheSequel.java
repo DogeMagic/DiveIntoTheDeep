@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 /*FYI: Eliza and this auto are practically identical, this is meant
 to enact as the blue side for auto.
  */
-@Autonomous(name="ElizaAuto", group="Robot")
+@Autonomous(name="AutotheSequel", group="Robot")
 
 public class ElizaAuto extends LinearOpMode {
 
