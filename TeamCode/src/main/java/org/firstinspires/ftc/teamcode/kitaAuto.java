@@ -30,7 +30,7 @@ public class kitaAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        fr = hardwareMap.get(DcMotor.class, "cheeseburger :3"); //NO >:(
+        fr = hardwareMap.get(DcMotor.class, "frontRight"); //NO >:( //cheese burger man here, it's fixed :3
         fl = hardwareMap.get(DcMotor.class, "frontLeft");
         br = hardwareMap.get(DcMotor.class, "backRight");
         bl = hardwareMap.get(DcMotor.class, "backLeft");
@@ -55,7 +55,7 @@ public class kitaAuto extends LinearOpMode {
 //Missing the part that makes the code work lmaoooooo
 
 //Add regular encoders
-        
+        e
     }//strafing encoders
     public void encoderStrafe(double speed, double leftInches, double rightInches, double timeoutS){
 

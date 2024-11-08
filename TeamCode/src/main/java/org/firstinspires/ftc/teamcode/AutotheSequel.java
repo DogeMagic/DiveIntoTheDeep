@@ -10,7 +10,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 //import org.checkerframework.checker.units.qual.A;
-
+/*FYI: Eliza and this auto are practically identical, this is meant
+to enact as the blue side for auto.
+ */
 @Autonomous(name="ElizaAuto", group="Robot")
 
 public class ElizaAuto extends LinearOpMode {
@@ -84,9 +86,9 @@ public class ElizaAuto extends LinearOpMode {
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         encoderDrive(DRIVE_SPEED,  1,  1, 5.0);  // S1: Forward 1 Inch with 5 Sec timeout
         encoderStrafe(DRIVE_SPEED, -40, -40, 5.0);  // S2: Strafe Right 40 Inches with 4 Sec timeout
-        encoderStrafe(DRIVE_SPEED, -40, -40, 5.0);
-        encoderDrive(DRIVE_SPEED, 10, 10, 5.0);
-        encoderStrafe(DRIVE_SPEED, -40, -40, 5.0);
+        encoderDrive(DRIVE_SPEED, 40, 40, 5.0); //S3: (In theory) move forward 40 inches with 5 second timeout.
+       encoderStrafe(DRIVE_SPEED, -40, -40, 5.0);
+
         telemetry.addData("Path", "Complete");
         telemetry.update();
         sleep(1000);  // pause to display final telemetry message.
