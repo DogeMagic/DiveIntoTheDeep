@@ -8,12 +8,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-//import org.checkerframework.checker.units.qual.A;
 /*FYI: Eliza and this auto are practically identical, this is meant
 to enact as the blue side for auto.
  */
-@Autonomous(name="AutotheSequel", group="Robot")
+
+//import org.checkerframework.checker.units.qual.A;
+@Autonomous(name="ElizaAuto", group="Robot")
 
 public class ElizaAuto extends LinearOpMode {
 
