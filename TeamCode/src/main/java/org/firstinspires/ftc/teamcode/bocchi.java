@@ -11,6 +11,7 @@ public class bocchi extends OpMode {
     DcMotor bl;
     DcMotor fr;
     DcMotor br;
+    DcMotor hang;
     DcMotor leftLift;
     DcMotor rightLift;
     Servo rightClaw;
@@ -23,6 +24,7 @@ public class bocchi extends OpMode {
         bl = hardwareMap.dcMotor.get("bl");
         fr = hardwareMap.dcMotor.get("fr");
         br = hardwareMap.dcMotor.get("br");
+        hang = hardwareMap.dcMotor.get("hang");
         leftClaw = hardwareMap.servo.get("LC");
         rightClaw = hardwareMap.servo.get("RC");
         leftLift = hardwareMap.dcMotor.get("LL");
@@ -31,6 +33,7 @@ public class bocchi extends OpMode {
         fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        hang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
@@ -89,31 +92,40 @@ public class bocchi extends OpMode {
         if (gamepad2.left_bumper) {
             leftLift.setPower(-.2);
             rightLift.setPower(.2);
-            
+
         } else if (gamepad2.right_bumper) {
             leftLift.setPower(.6);
             rightLift.setPower(-.6);
-            
+
         } else {
             leftLift.setPower(0);
             rightLift.setPower(0);
         }
 
         // Intake out
-        if (gamepad2.b){ //close all
+        if (gamepad2.b) { //close all
             leftClaw.setPosition(0);
             rightClaw.setPosition(1);
-        }
-        else if (gamepad2.a){ //open all
+        } else if (gamepad2.a) { //open all
             rightClaw.setPosition(.5);
             leftClaw.setPosition(.45);
-        }
-        else if (gamepad2.x) { //open left
+        } else if (gamepad2.x) { //open left
             leftClaw.setPosition(.10);
 
         } else if (gamepad2.y) { //opens right
             rightClaw.setPosition(.10);
 
         }
+        // Hang to go up and down
+        if (gamepad2.dpad_up) {
+            hang.setPower(.7);
+
+        } else if (gamepad2.dpad_down) {
+            hang.setPower(-.7);
+
+        } else {
+            hang.setPower(0);
+        }
+
     }
 }

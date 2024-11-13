@@ -10,6 +10,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import static com.qualcomm.hardware.rev.RevHubOrientationOnRobot.xyzOrientation;
 
@@ -17,11 +18,25 @@ import static com.qualcomm.hardware.rev.RevHubOrientationOnRobot.xyzOrientation;
 @TeleOp(name = "autotestJimiHen", group = "Sensor")
 @Disabled     // Comment this out to add to the OpMode list
 public class autotestJimiHen extends LinearOpMode {
-    IMU imu;
-    DcMotor fl;
-    DcMotor bl;
-    DcMotor fr;
-    DcMotor br;
+    private IMU             imu         = null;      // Control/Expansion Hub IMU
+    private DcMotor         fr   = null;
+    private DcMotor         fl  = null;
+    private DcMotor         bl  = null;
+    private DcMotor         br  = null;
+
+
+    private ElapsedTime runtime = new ElapsedTime();
+
+    static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
+    static final double     DRIVE_GEAR_REDUCTION    = 1.0 ;     // No External Gearing.
+    static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
+    static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+                                                                (WHEEL_DIAMETER_INCHES * 3.1415);
+    static final double     DRIVE_SPEED             = 0.6;
+    static final double     TURN_SPEED              = 0.5;
+    static final double     HEADING_THRESHOLD       = 1.0 ;
+    static final double     P_TURN_GAIN            = 0.02;
+    static final double     P_DRIVE_GAIN           = 0.03;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -31,6 +46,17 @@ public class autotestJimiHen extends LinearOpMode {
             fr = hardwareMap.dcMotor.get("fr");
             br = hardwareMap.dcMotor.get("br");
             imu = hardwareMap.get(IMU.class, "imu");
+
+           /* private double  targetHeading = 0;
+            private double  driveSpeed    = 0;
+            private double  turnSpeed     = 0;
+            private double  leftSpeed     = 0;
+            private double  rightSpeed    = 0;
+            private int     leftTarget    = 0;
+            private int     rightTarget   = 0;
+            double          headingError  = 0;
+
+            */
 
             double xRotation = 0;  // enter the desired X rotation angle here.
             double yRotation = 0;  // enter the desired Y rotation angle here.
@@ -84,6 +110,8 @@ public class autotestJimiHen extends LinearOpMode {
                 sleep(1000);  // Pause to display last telemetry message.
 
                 */
+
+
 
 
             }

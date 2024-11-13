@@ -56,7 +56,7 @@ public class kitaAuto extends LinearOpMode {
 
 //Add regular encoders
     }//strafing encoders
-    public void encoderStrafe(double speed, double leftInches, double rightInches, double timeoutS){
+    /*public void encoderStrafe(double speed, double leftInches, double rightInches, double timeoutS){
 
         int newflTarget;
         int newfrTarget;
@@ -120,7 +120,7 @@ public class kitaAuto extends LinearOpMode {
             bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             sleep(250);   // optional pause after each move.
+
+     */
         }
-    }
-}
 
