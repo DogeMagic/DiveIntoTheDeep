@@ -17,7 +17,6 @@ import com.qualcomm.robotcore.util.Range;
 import static com.qualcomm.hardware.rev.RevHubOrientationOnRobot.xyzOrientation;
 
 @Autonomous(name="autotestJimiHen", group="Robot")
-@Disabled
 public class autotestJimiHen extends LinearOpMode {
 
     /* Declare OpMode members. */
