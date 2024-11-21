@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "bocchi")
@@ -11,9 +12,9 @@ public class bocchi extends OpMode {
     DcMotor bl;
     DcMotor fr;
     DcMotor br;
-    DcMotor hang;
-    DcMotor leftLift;
-    DcMotor rightLift;
+    DcMotor leftHang;
+    DcMotor rightHang;
+    DcMotor lift;
     Servo rightClaw;
     Servo leftClaw;
 
@@ -24,20 +25,22 @@ public class bocchi extends OpMode {
         bl = hardwareMap.dcMotor.get("bl");
         fr = hardwareMap.dcMotor.get("fr");
         br = hardwareMap.dcMotor.get("br");
-        hang = hardwareMap.dcMotor.get("hang");
+        leftHang = hardwareMap.dcMotor.get("leftHang");
+        rightHang = hardwareMap.dcMotor.get("rightHang");
         leftClaw = hardwareMap.servo.get("LC");
         rightClaw = hardwareMap.servo.get("RC");
-        leftLift = hardwareMap.dcMotor.get("LL");
-        rightLift = hardwareMap.dcMotor.get("RL");
-        fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        lift = hardwareMap.dcMotor.get("lift");
+
+        lift.setDirection(DcMotorSimple.Direction.FORWARD);
+        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        /*fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         br.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        hang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-
-
+        leftHang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        rightHang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);*/
     }
 
     @Override
@@ -45,8 +48,8 @@ public class bocchi extends OpMode {
 
         //Front back Left
         if (Math.abs(gamepad1.left_stick_y) > .2) {
-            fl.setPower(gamepad1.left_stick_y * -1);
-            bl.setPower(gamepad1.left_stick_y * 1);
+            fl.setPower(gamepad1.left_stick_y * 1);
+            bl.setPower(gamepad1.left_stick_y * -1);
         } else {
             fl.setPower(0);
             bl.setPower(0);
@@ -90,41 +93,45 @@ public class bocchi extends OpMode {
         //Lift
         // Needs to be faster down AND slower up
         if (gamepad2.left_bumper) {
-            leftLift.setPower(-.2);
-            rightLift.setPower(.2);
-
+            lift.setPower(-.5);
         } else if (gamepad2.right_bumper) {
-            leftLift.setPower(.6);
-            rightLift.setPower(-.6);
-
+            lift.setPower(0.9);
         } else {
-            leftLift.setPower(0);
-            rightLift.setPower(0);
+            lift.setPower(0);
         }
 
         // Intake out
         if (gamepad2.b) { //close all
-            leftClaw.setPosition(0);
-            rightClaw.setPosition(1);
+            leftClaw.setPosition(0); // always goes up in values
+            rightClaw.setPosition(1); //always goes down in values
+
         } else if (gamepad2.a) { //open all
             rightClaw.setPosition(.5);
             leftClaw.setPosition(.45);
-        } else if (gamepad2.x) { //open left
+
+        } else if (gamepad2.x) {
+            rightClaw.setPosition(.40);
+            leftClaw.setPosition(.40);
+
+        } else if (gamepad2.dpad_left) { //open left
             leftClaw.setPosition(.10);
 
-        } else if (gamepad2.y) { //opens right
-            rightClaw.setPosition(.10);
+        } else if (gamepad2.dpad_right) { //opens right
+            rightClaw.setPosition(.90);
 
         }
         // Hang to go up and down
         if (gamepad2.dpad_up) {
-            hang.setPower(.7);
+            leftHang.setPower(.9);
+            rightHang.setPower(.9);
 
         } else if (gamepad2.dpad_down) {
-            hang.setPower(-.7);
+            leftHang.setPower(-.9);
+            rightHang.setPower(-.9);
 
         } else {
-            hang.setPower(0);
+            leftHang.setPower(0);
+            rightHang.setPower(0);
         }
 
     }
