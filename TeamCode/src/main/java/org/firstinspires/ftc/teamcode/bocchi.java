@@ -101,6 +101,7 @@ public class bocchi extends OpMode {
         }
 
         // Intake out
+        // Change RC to make it wrist??
         if (gamepad2.b) { //close all
             leftClaw.setPosition(0); // always goes up in values
             rightClaw.setPosition(1); //always goes down in values
