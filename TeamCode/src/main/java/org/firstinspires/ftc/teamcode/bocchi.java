@@ -108,12 +108,14 @@ public class bocchi extends OpMode {
         } else if (gamepad2.a) { //open all
             claw.setPosition(.45);
 
-        } else if (gamepad2.x) {
+        /*} else if (gamepad2.x) {
             claw.setPosition(.40);
             
         } else if (gamepad2.dpad_left) { //open left
             claw.setPosition(.10);
         }
+        */
+        
         // Hang to go up and down
         if (gamepad2.dpad_up) {
             leftHang.setPower(.9);
