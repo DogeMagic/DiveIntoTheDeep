@@ -16,7 +16,7 @@ public class bocchi extends OpMode {
     DcMotor rightHang;
     DcMotor lift;
     Servo wrist;
-    Servo leftClaw;
+    Servo claw;
 
 
     @Override
@@ -27,7 +27,7 @@ public class bocchi extends OpMode {
         br = hardwareMap.dcMotor.get("br");
         leftHang = hardwareMap.dcMotor.get("leftHang");
         rightHang = hardwareMap.dcMotor.get("rightHang");
-        leftClaw = hardwareMap.servo.get("LC");
+        claw = hardwareMap.servo.get("claw");
         wrist = hardwareMap.servo.get("wrist");
         lift = hardwareMap.dcMotor.get("lift");
 
@@ -103,17 +103,16 @@ public class bocchi extends OpMode {
         // Intake out
         // Change RC to make it wrist??
         if (gamepad2.b) { //close all
-            leftClaw.setPosition(0); // always goes up in value
+            claw.setPosition(0); // always goes up in value
 
         } else if (gamepad2.a) { //open all
-            leftClaw.setPosition(.45);
+            claw.setPosition(.45);
 
         } else if (gamepad2.x) {
-            leftClaw.setPosition(.40);
-
+            claw.setPosition(.40);
+            
         } else if (gamepad2.dpad_left) { //open left
-            leftClaw.setPosition(.10);
-
+            claw.setPosition(.10);
         }
         // Hang to go up and down
         if (gamepad2.dpad_up) {
