@@ -15,6 +15,7 @@ public class bocchi extends OpMode {
     DcMotor leftHang;
     DcMotor rightHang;
     DcMotor lift;
+    //change
     Servo rightClaw;
     Servo leftClaw;
 
