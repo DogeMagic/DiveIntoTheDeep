@@ -119,7 +119,7 @@ public class bocchi extends OpMode {
 
         } else if (gamepad2.dpad_right) { //opens right
             rightClaw.setPosition(.90);
-
+// add the wrist and change the claw
         }
         // Hang to go up and down
         if (gamepad2.dpad_up) {
