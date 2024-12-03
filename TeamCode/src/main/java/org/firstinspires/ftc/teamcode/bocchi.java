@@ -15,9 +15,8 @@ public class bocchi extends OpMode {
     DcMotor leftHang;
     DcMotor rightHang;
     DcMotor lift;
-    //change
-    Servo rightClaw;
-    Servo leftClaw;
+    Servo claw;
+    Servo wrist;
 
 
     @Override
@@ -28,8 +27,8 @@ public class bocchi extends OpMode {
         br = hardwareMap.dcMotor.get("br");
         leftHang = hardwareMap.dcMotor.get("leftHang");
         rightHang = hardwareMap.dcMotor.get("rightHang");
-        leftClaw = hardwareMap.servo.get("LC");
-        rightClaw = hardwareMap.servo.get("RC");
+        claw = hardwareMap.servo.get("claw");
+        wrist = hardwareMap.servo.get("wrist");
         lift = hardwareMap.dcMotor.get("lift");
 
         lift.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -103,23 +102,14 @@ public class bocchi extends OpMode {
 
         // Intake out
         if (gamepad2.b) { //close all
-            leftClaw.setPosition(0); // always goes up in values
-            rightClaw.setPosition(1); //always goes down in values
+            claw.setPosition(0); // always goes up in values
 
         } else if (gamepad2.a) { //open all
-            rightClaw.setPosition(.5);
-            leftClaw.setPosition(.45);
+            claw.setPosition(.45);
 
         } else if (gamepad2.x) {
-            rightClaw.setPosition(.40);
-            leftClaw.setPosition(.40);
+            claw.setPosition(.40);
 
-        } else if (gamepad2.dpad_left) { //open left
-            leftClaw.setPosition(.10);
-
-        } else if (gamepad2.dpad_right) { //opens right
-            rightClaw.setPosition(.90);
-// add the wrist and change the claw
         }
         // Hang to go up and down
         if (gamepad2.dpad_up) {
@@ -134,6 +124,15 @@ public class bocchi extends OpMode {
             leftHang.setPower(0);
             rightHang.setPower(0);
         }
+        //This is the wrist have to tweek it
+        if (gamepad2.dpad_right) {
+            wrist.setPosition(1);
 
+        } else if (gamepad2.dpad_left) {
+            wrist.setPosition(0.1);
+
+        } else if (gamepad2.y) {
+            wrist.setPosition(0.30);
+        }
     }
 }
