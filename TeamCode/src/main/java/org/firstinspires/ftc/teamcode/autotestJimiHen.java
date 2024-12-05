@@ -13,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -22,27 +23,31 @@ import static com.qualcomm.hardware.rev.RevHubOrientationOnRobot.xyzOrientation;
 public class autotestJimiHen extends LinearOpMode {
 
     /* Declare OpMode members. */
-    private DcMotor         bl   = null;
-    private DcMotor         br  = null;
-    private DcMotor         fr   = null;
-    private DcMotor         fl  = null;
-    private IMU             imu         = null;      // Control/Expansion Hub IMU
+     DcMotor         bl   = null;
+     DcMotor         br  = null;
+     DcMotor         fr   = null;
+     DcMotor         fl  = null;
+     DcMotor         lift = null;
+     Servo           claw = null;
+     Servo           wrist = null;
+     ElapsedTime     runtime = new ElapsedTime();
+     IMU             imu   = null;      // Control/Expansion Hub IMU
 
-    private double          headingError  = 0;
+    double          headingError  = 0;
 
     // These variable are declared here (as class members) so they can be updated in various methods,
     // but still be displayed by sendTelemetry()
-    private double  targetHeading = 0;
-    private double  driveSpeed    = 0;
-    private double  turnSpeed     = 0;
-    private double  blSpeed     = 0;
-    private double  brSpeed    = 0;
-    private double  flSpeed     = 0;
-    private double  frSpeed    = 0;
-    private int     flTarget    = 0;
-    private int     blTarget    = 0;
-    private int     brTarget   = 0;
-    private int     frTarget   = 0;
+    double  targetHeading = 0;
+    double  driveSpeed    = 0;
+    double  turnSpeed     = 0;
+    double  blSpeed     = 0;
+    double  brSpeed    = 0;
+    double  flSpeed     = 0;
+    double  frSpeed    = 0;
+    int     flTarget    = 0;
+    int     blTarget    = 0;
+    int     brTarget   = 0;
+    int     frTarget   = 0;
 
     // Calculate the COUNTS_PER_INCH for your specific drive train.
     // Go to your motor vendor website to determine your motor's COUNTS_PER_MOTOR_REV
@@ -78,6 +83,9 @@ public class autotestJimiHen extends LinearOpMode {
         br = hardwareMap.get(DcMotor.class, "br");
         fr  = hardwareMap.get(DcMotor.class, "fr");
         fl = hardwareMap.get(DcMotor.class, "fl");
+        lift = hardwareMap.get(DcMotor.class, "lift");
+        claw = hardwareMap.get(Servo.class, "claw");
+        wrist = hardwareMap.get(Servo.class, "wrist");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
@@ -86,6 +94,9 @@ public class autotestJimiHen extends LinearOpMode {
         br.setDirection(DcMotor.Direction.FORWARD);
         fl.setDirection(DcMotor.Direction.FORWARD);
         fr.setDirection(DcMotor.Direction.REVERSE);
+        lift.setDirection(DcMotorSimple.Direction.FORWARD);
+        claw.setPosition(Servo.MIN_POSITION);
+        wrist.setPosition(Servo.MAX_POSITION);
 
         /* The next two lines define Hub orientation.
          * The Default Orientation (shown) is when a hub is mounted horizontally with the printed logo pointing UP and the USB port pointing FORWARD.
@@ -105,6 +116,7 @@ public class autotestJimiHen extends LinearOpMode {
         bl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         br.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         fl.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         fr.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         bl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -394,4 +406,49 @@ public class autotestJimiHen extends LinearOpMode {
         YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
         return orientation.getYaw(AngleUnit.DEGREES);
     }
+    public void encoderlift (double speed,
+                             double leftInches, double rightInches,
+                             double timeoutS) {
+        int liftTarget;
+
+        // Ensure that the OpMode is still active
+        if (opModeIsActive()) {
+
+            // Determine new target position, and pass to motor controller
+            liftTarget = lift.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            lift.setTargetPosition(liftTarget);
+
+            // Turn On RUN_TO_POSITION
+            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // reset the timeout time and start motion.
+            runtime.reset();
+            lift.setPower(Math.abs(speed));
+
+            // keep looping while we are still active, and there is time left, and both motors are running.
+            // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
+            // its target position, the motion will stop.  This is "safer" in the event that the robot will
+            // always end the motion as soon as possible.
+            // However, if you require that BOTH motors have finished their moves before the robot continues
+            // onto the next step, use (isBusy() || isBusy()) in the loop test.
+            while (opModeIsActive() &&
+                    (runtime.seconds() < timeoutS) &&
+                    lift.isBusy()) {
+
+                // Display it for the driver.
+                telemetry.addData("Running to",  " %7d :%7d", liftTarget);
+                telemetry.addData("Currently at",  " at %7d :%7d",
+                        lift.getCurrentPosition());
+                telemetry.update();
+            }
+
+            // Stop all motion;
+            lift.setPower(0);
+
+            // Turn off RUN_TO_POSITION
+            lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            sleep(250);   // optional pause after each move.
+        }
+}
 }
