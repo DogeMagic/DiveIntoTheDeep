@@ -90,13 +90,11 @@ public class autotestJimiHen extends LinearOpMode {
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
-        bl.setDirection(DcMotor.Direction.REVERSE);
-        br.setDirection(DcMotor.Direction.FORWARD);
-        fl.setDirection(DcMotor.Direction.FORWARD);
-        fr.setDirection(DcMotor.Direction.REVERSE);
+        bl.setDirection(DcMotor.Direction.FORWARD);
+        br.setDirection(DcMotor.Direction.REVERSE);
+        fl.setDirection(DcMotor.Direction.REVERSE);
+        fr.setDirection(DcMotor.Direction.FORWARD);
         lift.setDirection(DcMotorSimple.Direction.FORWARD);
-        claw.setPosition(Servo.MIN_POSITION);
-        wrist.setPosition(Servo.MAX_POSITION);
 
         /* The next two lines define Hub orientation.
          * The Default Orientation (shown) is when a hub is mounted horizontally with the printed logo pointing UP and the USB port pointing FORWARD.
@@ -144,8 +142,12 @@ public class autotestJimiHen extends LinearOpMode {
         //          Add a sleep(2000) after any step to keep the telemetry data visible for review
 
         driveStraight(DRIVE_SPEED, 15.0, 0.0);    // Drive Forward 15"
+        //encoderlift(DRIVE_SPEED, 1, 1);
+        //claw.setPosition(Servo.MIN_POSITION);
+        //wrist.setPosition(Servo.MAX_POSITION);
       //  turnToHeading( TURN_SPEED, -45.0);               // Turn  CW to -45 Degrees
       //  holdHeading( TURN_SPEED, -45.0, 0.5);   // Hold -45 Deg heading for a 1/2 second
+
 /*
         driveStraight(DRIVE_SPEED, 11.0, -45.0);  // Drive Forward 11" at -45 degrees (12"x and 12"y)
         turnToHeading( TURN_SPEED,  45.0);               // Turn  CCW  to  45 Degrees
@@ -184,9 +186,7 @@ public class autotestJimiHen extends LinearOpMode {
      *                   0 = fwd. +ve is CCW from fwd. -ve is CW from forward.
      *                   If a relative angle is required, add/subtract from the current robotHeading.
      */
-    public void driveStraight(double maxDriveSpeed,
-                              double distance,
-                              double heading) {
+    public void driveStraight(double maxDriveSpeed, double distance, double heading) {
 
         // Ensure that the OpMode is still active
         if (opModeIsActive()) {
@@ -407,7 +407,7 @@ public class autotestJimiHen extends LinearOpMode {
         return orientation.getYaw(AngleUnit.DEGREES);
     }
     public void encoderlift (double speed,
-                             double leftInches, double rightInches,
+                             double liftInches,
                              double timeoutS) {
         int liftTarget;
 
@@ -415,7 +415,7 @@ public class autotestJimiHen extends LinearOpMode {
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            liftTarget = lift.getCurrentPosition() + (int)(leftInches * COUNTS_PER_INCH);
+            liftTarget = lift.getCurrentPosition() + (int)(liftInches * COUNTS_PER_INCH);
             lift.setTargetPosition(liftTarget);
 
             // Turn On RUN_TO_POSITION

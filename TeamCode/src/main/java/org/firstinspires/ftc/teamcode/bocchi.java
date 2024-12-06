@@ -102,13 +102,13 @@ public class bocchi extends OpMode {
 
         // Intake out
         if (gamepad2.b) { //close all
-            claw.setPosition(0); // always goes up in values
+            wrist.setPosition(0); // always goes up in values
 
         } else if (gamepad2.a) { //open all
-            claw.setPosition(.45);
+            wrist.setPosition(.38);
 
         } else if (gamepad2.x) {
-            claw.setPosition(.40);
+            wrist.setPosition(.55);
 
         }
         // Hang to go up and down
@@ -126,13 +126,10 @@ public class bocchi extends OpMode {
         }
         //This is the wrist have to tweek it
         if (gamepad2.dpad_right) {
-            wrist.setPosition(1);
+            claw.setPosition(1);
 
         } else if (gamepad2.dpad_left) {
-            wrist.setPosition(0.1);
-
-        } else if (gamepad2.y) {
-            wrist.setPosition(0.30);
+            claw.setPosition(0.1);
         }
     }
 }
