@@ -129,7 +129,7 @@ public class bocchi extends OpMode {
             claw.setPosition(1);
 
         } else if (gamepad2.dpad_left) {
-            claw.setPosition(0.1);
+            claw.setPosition(0.20);
         }
     }
 }
