@@ -133,7 +133,7 @@ public class bocchi extends OpMode {
             leftHang.setPower(0);
             rightHang.setPower(0);
         }
-        //This is the wrist have to tweek it
+        //This is the wrist have to tweak it
         if (gamepad2.dpad_right) {
             claw.setPosition(1);
 

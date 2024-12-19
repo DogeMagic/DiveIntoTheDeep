@@ -27,7 +27,8 @@ public class autotestJimiHen extends LinearOpMode {
      DcMotor         br  = null;
      DcMotor         fr   = null;
      DcMotor         fl  = null;
-     DcMotor         lift = null;
+     DcMotor         rightLift = null;
+     DcMotor         leftLift = null;
      Servo           claw = null;
      Servo           wrist = null;
      ElapsedTime     runtime = new ElapsedTime();
@@ -83,7 +84,8 @@ public class autotestJimiHen extends LinearOpMode {
         br = hardwareMap.get(DcMotor.class, "br");
         fr  = hardwareMap.get(DcMotor.class, "fr");
         fl = hardwareMap.get(DcMotor.class, "fl");
-        lift = hardwareMap.get(DcMotor.class, "lift");
+        rightLift = hardwareMap.get(DcMotor.class, "RL");
+        leftLift = hardwareMap.get(DcMotor.class, "LL");
         claw = hardwareMap.get(Servo.class, "claw");
         wrist = hardwareMap.get(Servo.class, "wrist");
 
@@ -94,7 +96,8 @@ public class autotestJimiHen extends LinearOpMode {
         br.setDirection(DcMotor.Direction.REVERSE);
         fl.setDirection(DcMotor.Direction.REVERSE);
         fr.setDirection(DcMotor.Direction.FORWARD);
-        lift.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightLift.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftLift.setDirection(DcMotorSimple.Direction.FORWARD);
 
         /* The next two lines define Hub orientation.
          * The Default Orientation (shown) is when a hub is mounted horizontally with the printed logo pointing UP and the USB port pointing FORWARD.
@@ -406,49 +409,38 @@ public class autotestJimiHen extends LinearOpMode {
         YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
         return orientation.getYaw(AngleUnit.DEGREES);
     }
-    public void encoderlift (double speed,
-                             double liftInches,
-                             double timeoutS) {
-        int liftTarget;
+    public void controllLift (int targetPosition, double speed) {
 
-        // Ensure that the OpMode is still active
+        // Set target position for both lifts
         if (opModeIsActive()) {
 
             // Determine new target position, and pass to motor controller
-            liftTarget = lift.getCurrentPosition() + (int)(liftInches * COUNTS_PER_INCH);
-            lift.setTargetPosition(liftTarget);
+            leftLift.setTargetPosition(targetPosition);
+            rightLift.setTargetPosition(targetPosition);
 
             // Turn On RUN_TO_POSITION
-            lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
             // reset the timeout time and start motion.
             runtime.reset();
-            lift.setPower(Math.abs(speed));
+            leftLift.setPower(Math.abs(speed));
+            rightLift.setPower(Math.abs(speed));
 
-            // keep looping while we are still active, and there is time left, and both motors are running.
-            // Note: We use (isBusy() && isBusy()) in the loop test, which means that when EITHER motor hits
-            // its target position, the motion will stop.  This is "safer" in the event that the robot will
-            // always end the motion as soon as possible.
-            // However, if you require that BOTH motors have finished their moves before the robot continues
-            // onto the next step, use (isBusy() || isBusy()) in the loop test.
-            while (opModeIsActive() &&
-                    (runtime.seconds() < timeoutS) &&
-                    lift.isBusy()) {
-
-                // Display it for the driver.
-                telemetry.addData("Running to",  " %7d :%7d", liftTarget);
-                telemetry.addData("Currently at",  " at %7d :%7d",
-                        lift.getCurrentPosition());
+            // Keep looping while we are still active, and both motors are running
+            while (opModeIsActive() && (leftLift.isBusy() && rightLift.isBusy())) {
+                telemetry.addData("Left Lift Position", leftLift.getCurrentPosition());
+                telemetry.addData("Right Lift Position", rightLift.getCurrentPosition());
                 telemetry.update();
             }
 
-            // Stop all motion;
-            lift.setPower(0);
+            // Stop the motors
+            leftLift.setPower(0);
+            rightLift.setPower(0);
 
-            // Turn off RUN_TO_POSITION
-            lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-            sleep(250);   // optional pause after each move.
+            // Reset motor modes to RUN_USING_ENCODER
+            leftLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            rightLift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 }
 }
