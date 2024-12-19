@@ -14,7 +14,8 @@ public class bocchi extends OpMode {
     DcMotor br;
     DcMotor leftHang;
     DcMotor rightHang;
-    DcMotor lift;
+    DcMotor rightLift;
+    DcMotor leftlift;
     Servo claw;
     Servo wrist;
 
@@ -27,12 +28,16 @@ public class bocchi extends OpMode {
         br = hardwareMap.dcMotor.get("br");
         leftHang = hardwareMap.dcMotor.get("leftHang");
         rightHang = hardwareMap.dcMotor.get("rightHang");
+        rightLift = hardwareMap.dcMotor.get("RL");
+        leftlift = hardwareMap.dcMotor.get("LL");
         claw = hardwareMap.servo.get("claw");
         wrist = hardwareMap.servo.get("wrist");
-        lift = hardwareMap.dcMotor.get("lift");
 
-        lift.setDirection(DcMotorSimple.Direction.FORWARD);
-        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftlift.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftlift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        rightLift.setDirection(DcMotorSimple.Direction.FORWARD);
+        rightLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         /*fl.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         fr.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
@@ -93,11 +98,15 @@ public class bocchi extends OpMode {
         //Lift
         // Needs to be faster down AND slower up
         if (gamepad2.left_bumper) {
-            lift.setPower(-.5);
+            rightLift.setPower(-.5);
+            leftlift.setPower(-.5);
+
         } else if (gamepad2.right_bumper) {
-            lift.setPower(0.9);
+            rightLift.setPower(0.9);
+            leftlift.setPower(0.9);
         } else {
-            lift.setPower(0);
+            rightLift.setPower(0);
+            leftlift.setPower(0);
         }
 
         // Intake out

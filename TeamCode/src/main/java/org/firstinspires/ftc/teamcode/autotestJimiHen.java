@@ -143,7 +143,7 @@ public class autotestJimiHen extends LinearOpMode {
 
         driveStraight(DRIVE_SPEED, 15.0, 0.0);    // Drive Forward 15"
         //encoderlift(DRIVE_SPEED, 1, 1);
-        claw.setPosition(Servo.MIN_POSITION);
+        //claw.setPosition(Servo.MIN_POSITION);
         //wrist.setPosition(Servo.MAX_POSITION);
       //  turnToHeading( TURN_SPEED, -45.0);               // Turn  CW to -45 Degrees
       //  holdHeading( TURN_SPEED, -45.0, 0.5);   // Hold -45 Deg heading for a 1/2 second
