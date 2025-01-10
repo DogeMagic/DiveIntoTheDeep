@@ -64,7 +64,8 @@ public class autotestJimiHen extends LinearOpMode {
 
     // These constants define the desired driving/control characteristics
     // They can/should be tweaked to suit the specific robot drive train.
-    static final double     DRIVE_SPEED             = 0.1;     // Max driving speed for better distance accuracy.
+    static final double     DRIVE_SPEED             = 0.2
+            ;     // Max driving speed for better distance accuracy.
     static final double     TURN_SPEED              = 0.2;     // Max turn speed to limit turn rate.
     static final double     HEADING_THRESHOLD       = 1.0 ;    // How close must the heading get to the target before moving to next step.
     // Requiring more accuracy (a smaller number) will often make the turn take longer to get into the final position.
@@ -96,6 +97,7 @@ public class autotestJimiHen extends LinearOpMode {
         br.setDirection(DcMotor.Direction.REVERSE);
         fl.setDirection(DcMotor.Direction.REVERSE);
         fr.setDirection(DcMotor.Direction.FORWARD);
+
         rightLift.setDirection(DcMotorSimple.Direction.FORWARD);
         leftLift.setDirection(DcMotorSimple.Direction.FORWARD);
 
@@ -145,11 +147,23 @@ public class autotestJimiHen extends LinearOpMode {
         //          Add a sleep(2000) after any step to keep the telemetry data visible for review
 
         driveStraight(DRIVE_SPEED, 15.0, 0.0);    // Drive Forward 15"
-        //encoderlift(DRIVE_SPEED, 1, 1);
-        //claw.setPosition(Servo.MIN_POSITION);
-        //wrist.setPosition(Servo.MAX_POSITION);
-      //  turnToHeading( TURN_SPEED, -45.0);               // Turn  CW to -45 Degrees
-      //  holdHeading( TURN_SPEED, -45.0, 0.5);   // Hold -45 Deg heading for a 1/2 second
+        controllLift(2500,0.8);
+
+        moveServo(claw,1,1000);
+
+        moveServoGradually(wrist, 0, .38, 1000);
+
+        controllLift(2500, 0.8);
+
+        moveServo(claw,0,1000);
+
+        controllLift(0, 0.8);
+
+
+
+
+        //turnToHeading( TURN_SPEED, -45.0);               // Turn  CW to -45 Degrees
+       // holdHeading( TURN_SPEED, -45.0, 0.5);   // Hold -45 Deg heading for a 1/2 second
 
 /*
         driveStraight(DRIVE_SPEED, 11.0, -45.0);  // Drive Forward 11" at -45 degrees (12"x and 12"y)
@@ -400,6 +414,26 @@ public class autotestJimiHen extends LinearOpMode {
         telemetry.addData("FR Distance: ", fr.getCurrentPosition());
         telemetry.addData("FL Distance: ", fl.getCurrentPosition());
         telemetry.update();
+    }
+    public void moveServo(Servo servo, double position, long waitTime) {
+        // Set the servo to the position
+        servo.setPosition(position);
+
+        // Optional: Wait for the servo to move
+        if (waitTime > 0) {
+            sleep(waitTime);
+        }
+    }
+    public void moveServoGradually(Servo servo, double start, double end, long duration) {
+        int steps = 20;  // Number of steps for smooth movement
+        double stepSize = (end - start) / steps;
+        long stepTime = duration / steps;
+
+        for (int i = 0; i <= steps; i++) {
+            double currentPosition = start + (i * stepSize);
+            servo.setPosition(currentPosition);
+            sleep(stepTime);
+        }
     }
 
     /**
