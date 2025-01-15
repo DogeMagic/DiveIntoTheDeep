@@ -149,9 +149,9 @@ public class autotestJimiHen extends LinearOpMode {
 
 
 
-        strafe(0.5, 9.0, "left");  // Strafe left for 18 inches at 50% speed
+        strafe(0.5, 9.0, "left");  // Strafe left for 9 inches at 50% speed
 
-        driveForward(0.5, .9);  // Drive forward 24 inches at 50% speed
+        driveForward(0.5, .9);  // Drive forward .9 inches at 50% speed
         //Close the claw to grab the object
         moveServo(claw, 1, 1000);  // 1 = closed position
 
