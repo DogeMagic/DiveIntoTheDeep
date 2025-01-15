@@ -114,10 +114,10 @@ public class bocchi extends OpMode {
             wrist.setPosition(0); // always goes up in values
 
         } else if (gamepad2.a) { //open all
-            wrist.setPosition(.38);
+            wrist.setPosition(.30);
 
         } else if (gamepad2.x) {
-            wrist.setPosition(.55);
+            wrist.setPosition(.60);
 
         }
         // Hang to go up and down

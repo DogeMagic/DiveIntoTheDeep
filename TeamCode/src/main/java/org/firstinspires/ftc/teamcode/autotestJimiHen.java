@@ -146,18 +146,33 @@ public class autotestJimiHen extends LinearOpMode {
         //          holdHeading() is used after turns to let the heading stabilize
         //          Add a sleep(2000) after any step to keep the telemetry data visible for review
 
-        driveStraight(DRIVE_SPEED, 15.0, 0.0);    // Drive Forward 15"
-        controllLift(2500,0.8);
 
-        moveServo(claw,1,1000);
 
-        moveServoGradually(wrist, 0, .38, 1000);
 
-        controllLift(2500, 0.8);
+        strafe(0.5, 9.0, "left");  // Strafe left for 18 inches at 50% speed
 
-        moveServo(claw,0,1000);
+        driveForward(0.5, .9);  // Drive forward 24 inches at 50% speed
+        //Close the claw to grab the object
+        moveServo(claw, 1, 1000);  // 1 = closed position
 
-        controllLift(0, 0.8);
+        //Lift the object
+        controllLift(2600, 0.8);  // Move lift to target position (2500 ticks)
+
+        //Adjust the wrist for orientation
+        moveServoGradually(wrist, 0.10, 0.38, 1000);  // Gradual wrist movement
+        moveServo(claw, 0, 1000);  // 0 = open position
+
+        telemetry.addData("Status", "Taking a break...");
+        telemetry.update();
+        sleep(3000);  // Pause for 2 seconds
+
+        moveServoGradually(wrist, 0, 0, 1000);  // Gradual wrist movement
+
+        //Lower the lift while keeping the claw closed
+        controllLift(0, 0.8);  // Lower lift to bottom position
+
+        // Open the claw to release the object
+        moveServo(claw, 0, 1000);  // 0 = open position
 
 
 
@@ -442,6 +457,129 @@ public class autotestJimiHen extends LinearOpMode {
     public double getHeading() {
         YawPitchRollAngles orientation = imu.getRobotYawPitchRollAngles();
         return orientation.getYaw(AngleUnit.DEGREES);
+    }
+    public void driveForward(double speed, double distance) {
+        int newFrontLeftTarget, newFrontRightTarget, newBackLeftTarget, newBackRightTarget;
+
+        if (opModeIsActive()) {
+            // Calculate the target position in encoder ticks
+            int moveCounts = (int) (distance * COUNTS_PER_INCH); // Replace COUNTS_PER_INCH with your specific value
+
+            // Determine the new target position for each motor
+            newFrontLeftTarget = fl.getCurrentPosition() + moveCounts;
+            newFrontRightTarget = fr.getCurrentPosition() + moveCounts;
+            newBackLeftTarget = bl.getCurrentPosition() + moveCounts;
+            newBackRightTarget = br.getCurrentPosition() + moveCounts;
+
+            // Set target positions for each motor
+            fl.setTargetPosition(newFrontLeftTarget);
+            fr.setTargetPosition(newFrontRightTarget);
+            bl.setTargetPosition(newBackLeftTarget);
+            br.setTargetPosition(newBackRightTarget);
+
+            // Set all motors to RUN_TO_POSITION
+            fl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            fr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            bl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            br.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // Start moving the motors
+            fl.setPower(Math.abs(speed));
+            fr.setPower(Math.abs(speed));
+            bl.setPower(Math.abs(speed));
+            br.setPower(Math.abs(speed));
+
+            // Keep looping while all motors are busy and the OpMode is active
+            while (opModeIsActive() &&
+                    (fl.isBusy() && fr.isBusy() && bl.isBusy() && br.isBusy())) {
+                // Optional: Add telemetry to display progress
+                telemetry.addData("Path", "Driving Forward");
+                telemetry.addData("Front Left", fl.getCurrentPosition());
+                telemetry.addData("Front Right", fr.getCurrentPosition());
+                telemetry.addData("Back Left", bl.getCurrentPosition());
+                telemetry.addData("Back Right", br.getCurrentPosition());
+                telemetry.update();
+            }
+
+            // Stop all motion
+            fl.setPower(0);
+            fr.setPower(0);
+            bl.setPower(0);
+            br.setPower(0);
+
+            // Reset all motors to RUN_USING_ENCODER
+            fl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            fr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+    }
+    public void strafe(double speed, double distance, String direction) {
+        int newFrontLeftTarget, newFrontRightTarget, newBackLeftTarget, newBackRightTarget;
+
+        if (opModeIsActive()) {
+            // Calculate the target position in encoder ticks
+            int moveCounts = (int) (distance * COUNTS_PER_INCH); // Replace COUNTS_PER_INCH with your specific value
+
+            // Determine the direction and set target positions
+            if (direction.equalsIgnoreCase("left")) {
+                newFrontLeftTarget = fl.getCurrentPosition() - moveCounts;
+                newFrontRightTarget = fr.getCurrentPosition() + moveCounts;
+                newBackLeftTarget = bl.getCurrentPosition() + moveCounts;
+                newBackRightTarget = br.getCurrentPosition() - moveCounts;
+            } else if (direction.equalsIgnoreCase("right")) {
+                newFrontLeftTarget = fl.getCurrentPosition() + moveCounts;
+                newFrontRightTarget = fr.getCurrentPosition() - moveCounts;
+                newBackLeftTarget = bl.getCurrentPosition() - moveCounts;
+                newBackRightTarget = br.getCurrentPosition() + moveCounts;
+            } else {
+                telemetry.addData("Error", "Invalid direction specified: %s", direction);
+                telemetry.update();
+                return;
+            }
+
+            // Set target positions for each motor
+            fl.setTargetPosition(newFrontLeftTarget);
+            fr.setTargetPosition(newFrontRightTarget);
+            bl.setTargetPosition(newBackLeftTarget);
+            br.setTargetPosition(newBackRightTarget);
+
+            // Set all motors to RUN_TO_POSITION
+            fl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            fr.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            bl.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            br.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            // Start moving the motors
+            fl.setPower(Math.abs(speed));
+            fr.setPower(Math.abs(speed));
+            bl.setPower(Math.abs(speed));
+            br.setPower(Math.abs(speed));
+
+            // Keep looping while all motors are busy and the OpMode is active
+            while (opModeIsActive() &&
+                    (fl.isBusy() && fr.isBusy() && bl.isBusy() && br.isBusy())) {
+                // Optional: Add telemetry to display progress
+                telemetry.addData("Path", "Strafing %s", direction);
+                telemetry.addData("Front Left", fl.getCurrentPosition());
+                telemetry.addData("Front Right", fr.getCurrentPosition());
+                telemetry.addData("Back Left", bl.getCurrentPosition());
+                telemetry.addData("Back Right", br.getCurrentPosition());
+                telemetry.update();
+            }
+
+            // Stop all motion
+            fl.setPower(0);
+            fr.setPower(0);
+            bl.setPower(0);
+            br.setPower(0);
+
+            // Reset all motors to RUN_USING_ENCODER
+            fl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            fr.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            bl.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            br.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
     }
     public void controllLift (int targetPosition, double speed) {
 
