@@ -74,7 +74,7 @@ public class autotestJimiHen extends LinearOpMode {
     // Increase these numbers if the heading does not correct strongly enough (eg: a heavy robot or using tracks)
     // Decrease these numbers if the heading does not settle on the correct value (eg: very agile robot with omni wheels)
     static final double     P_TURN_GAIN            = 0.02;     // Larger is more responsive, but also less stable.
-    static final double     P_DRIVE_GAIN           = 0.03;     // Larger is more responsive, but also less stable.
+    static final double     P_DRIVE_GAIN           = 0.02;     // Larger is more responsive, but also less stable.
 
 
     @Override
@@ -147,13 +147,12 @@ public class autotestJimiHen extends LinearOpMode {
         //          Add a sleep(2000) after any step to keep the telemetry data visible for review
 
 
-
+        //Close the claw to grab the object
+        moveServo(claw, 1, 1000);  // 1 = closed position
 
         strafe(0.5, 9.0, "left");  // Strafe left for 9 inches at 50% speed
 
         driveForward(0.5, .9);  // Drive forward .9 inches at 50% speed
-        //Close the claw to grab the object
-        moveServo(claw, 1, 1000);  // 1 = closed position
 
         //Lift the object
         controllLift(2600, 0.8);  // Move lift to target position (2500 ticks)
@@ -162,7 +161,7 @@ public class autotestJimiHen extends LinearOpMode {
         moveServoGradually(wrist, 0.10, 0.38, 1000);  // Gradual wrist movement
         moveServo(claw, 0, 1000);  // 0 = open position
 
-        telemetry.addData("Status", "Taking a break...");
+        telemetry.addData("Status", "eepy...");
         telemetry.update();
         sleep(3000);  // Pause for 2 seconds
 
