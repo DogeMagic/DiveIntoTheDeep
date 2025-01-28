@@ -113,7 +113,7 @@ public class bocchi extends OpMode {
 
         // Intake out
         if (gamepad2.b) { //close all
-            leftWrist.setPosition(0); // always goes up in values
+            leftWrist.setPosition(1); // always goes down in values
             rightWrist.setPosition(0); // always goes up in values
 
         } else if (gamepad2.a) { //open all
@@ -121,8 +121,8 @@ public class bocchi extends OpMode {
             rightWrist.setPosition(.30);
 
         } else if (gamepad2.x) {
-            leftWrist.setPosition(.60);
-            rightWrist.setPosition(.60);
+            leftWrist.setPosition(.65);
+            rightWrist.setPosition(.70);
 
         }
         // Hang to go up and down
