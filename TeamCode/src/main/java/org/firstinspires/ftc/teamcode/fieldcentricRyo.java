@@ -76,7 +76,7 @@ public class fieldcentricRyo extends LinearOpMode {
             fr.setPower(frontRightPower);
             br.setPower(backRightPower);
 
-//Added TeleOp into the field centric if it doesn't work we will go back to og             
+            //Added TeleOp into the field centric if it doesn't work we will go back to og
             @TeleOp(name = "bocchi")
             class bocchi extends OpMode {
                 DcMotor fl;
