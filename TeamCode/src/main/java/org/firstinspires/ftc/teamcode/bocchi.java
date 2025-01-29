@@ -17,8 +17,8 @@ public class bocchi extends OpMode {
     DcMotor rightLift;
     DcMotor leftlift;
     Servo claw;
-    Servo leftWrist;
-    Servo rightWrist;
+    Servo leftElbow;
+    Servo rightElbow;
 
 
     @Override
@@ -32,8 +32,8 @@ public class bocchi extends OpMode {
         rightLift = hardwareMap.dcMotor.get("RL");
         leftlift = hardwareMap.dcMotor.get("LL");
         claw = hardwareMap.servo.get("claw");
-        leftWrist = hardwareMap.servo.get("leftWrist");
-        rightWrist = hardwareMap.servo.get("rightWrist");
+        leftElbow = hardwareMap.servo.get("leftElbow");
+        rightElbow = hardwareMap.servo.get("rightElbow");
 
         leftlift.setDirection(DcMotorSimple.Direction.FORWARD);
         leftlift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -113,16 +113,16 @@ public class bocchi extends OpMode {
 
         // Intake out
         if (gamepad2.b) { //close all
-            leftWrist.setPosition(1); // always goes down in values
-            rightWrist.setPosition(0); // always goes up in values
+            leftElbow.setPosition(1); // always goes down in values
+            rightElbow.setPosition(0); // always goes up in values
 
         } else if (gamepad2.a) { //open all
-            leftWrist.setPosition(.30);   // sigma sigma on the wall whos the skibidiest of them all
-            rightWrist.setPosition(.30);
+            leftElbow.setPosition(.30);   // sigma sigma on the wall whos the skibidiest of them all
+            rightElbow.setPosition(.30);
 
         } else if (gamepad2.x) {
-            leftWrist.setPosition(.50);
-            rightWrist.setPosition(.50);
+            leftElbow.setPosition(.50);
+            rightElbow.setPosition(.50);
 
         }
         // Hang to go up and down

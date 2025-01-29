@@ -26,8 +26,8 @@ public class fieldcentricRyo extends LinearOpMode {
         DcMotor leftLift = hardwareMap.dcMotor.get("LL");
         DcMotor rightLift = hardwareMap.dcMotor.get("RL");
         Servo claw = hardwareMap.servo.get("claw");
-        Servo leftWrist = hardwareMap.servo.get("leftWrist");
-        Servo rightWrist = hardwareMap.servo.get("rightWrist");
+        Servo leftElbow = hardwareMap.servo.get("leftElbow");
+        Servo rightElbow = hardwareMap.servo.get("rightElbow");
 
         leftLift.setDirection(DcMotorSimple.Direction.FORWARD);
         leftLift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -114,7 +114,6 @@ public class fieldcentricRyo extends LinearOpMode {
             }
             //up and down p2
             //Lift
-            // Needs to be faster down AND slower up
             if (gamepad2.left_bumper) {
                 rightLift.setPower(-.5);
                 leftLift.setPower(-.5);
@@ -129,16 +128,16 @@ public class fieldcentricRyo extends LinearOpMode {
 
             // Intake out
             if (gamepad2.b) { //close all
-                leftWrist.setPosition(1); // always goes down in values
-                rightWrist.setPosition(0); // always goes up in values
+                leftElbow.setPosition(1); // always goes down in values
+                rightElbow.setPosition(0); // always goes up in values
 
             } else if (gamepad2.a) { //open all
-                leftWrist.setPosition(.30);   // sigma sigma on the wall whos the skibidiest of them all
-                rightWrist.setPosition(.30);
+                leftElbow.setPosition(.30);   // sigma sigma on the wall whos the skibidiest of them all
+                rightElbow.setPosition(.30);
 
             } else if (gamepad2.x) {
-                leftWrist.setPosition(.50);
-                rightWrist.setPosition(.50);
+                leftElbow.setPosition(.50);
+                rightElbow.setPosition(.50);
 
             }
             // Hang to go up and down
