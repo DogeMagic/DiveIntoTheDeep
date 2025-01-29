@@ -126,12 +126,12 @@ public class fieldcentricRyo extends LinearOpMode {
                 leftLift.setPower(0);
             }
 
-            // Intake out
-            if (gamepad2.b) { //close all
+            // Moves the Elbow in order of up, middle, and down
+            if (gamepad2.b) {
                 leftElbow.setPosition(1); // always goes down in values
                 rightElbow.setPosition(0); // always goes up in values
 
-            } else if (gamepad2.a) { //open all
+            } else if (gamepad2.a) {
                 leftElbow.setPosition(.30);   // sigma sigma on the wall whos the skibidiest of them all
                 rightElbow.setPosition(.30);
 
@@ -153,11 +153,11 @@ public class fieldcentricRyo extends LinearOpMode {
                 leftHang.setPower(0);
                 rightHang.setPower(0);
             }
-            //This is the claw have to tweak it
-            if (gamepad2.dpad_right) {
+            //Claw snap snap
+            if (gamepad2.dpad_right) { //open?
                 claw.setPosition(1);
 
-            } else if (gamepad2.dpad_left) {
+            } else if (gamepad2.dpad_left) { //colsed?????
                 claw.setPosition(0.20);
             }
         }
