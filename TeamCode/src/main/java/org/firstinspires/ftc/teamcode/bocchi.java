@@ -121,8 +121,8 @@ public class bocchi extends OpMode {
             rightWrist.setPosition(.30);
 
         } else if (gamepad2.x) {
-            leftWrist.setPosition(.65);
-            rightWrist.setPosition(.70);
+            leftWrist.setPosition(.50);
+            rightWrist.setPosition(.50);
 
         }
         // Hang to go up and down
@@ -138,7 +138,7 @@ public class bocchi extends OpMode {
             leftHang.setPower(0);
             rightHang.setPower(0);
         }
-        //This is the wrist have to tweak it
+        //This is the claw have to tweak it
         if (gamepad2.dpad_right) {
             claw.setPosition(1);
 

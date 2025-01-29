@@ -39,8 +39,13 @@ public class fieldcentricRyo extends LinearOpMode {
         // If your robot moves backwards when commanded to go forwards,
         // reverse the left side instead.
         // See the note about this earlier on this page.
-        fr.setDirection(DcMotorSimple.Direction.FORWARD); //the only one thats not reversed T-T
-        br.setDirection(DcMotorSimple.Direction.REVERSE);
+        bl.setDirection(DcMotor.Direction.FORWARD);
+        br.setDirection(DcMotor.Direction.REVERSE);
+        fl.setDirection(DcMotor.Direction.REVERSE);
+        fr.setDirection(DcMotor.Direction.FORWARD);
+
+        rightLift.setDirection(DcMotorSimple.Direction.FORWARD);
+        leftLift.setDirection(DcMotorSimple.Direction.FORWARD);
 
         // Retrieve the IMU from the hardware map
         IMU imu = hardwareMap.get(IMU.class, "imu");
@@ -89,7 +94,7 @@ public class fieldcentricRyo extends LinearOpMode {
             fr.setPower(frontRightPower);
             br.setPower(backRightPower);
 
-            //Added TeleOp into the field centric if it doesn't work we will go back to og
+            //Added TeleOp into the field centric if it doesn't work we will go back to og (I changed my mind)
             //Front back Left
             if (Math.abs(gamepad1.left_stick_y) > .2) {
                 fl.setPower(gamepad1.left_stick_y * 1);
@@ -104,32 +109,6 @@ public class fieldcentricRyo extends LinearOpMode {
                 fr.setPower(gamepad1.right_stick_y * -1);
                 br.setPower(gamepad1.right_stick_y * 1);
             } else {
-                fr.setPower(0);
-                br.setPower(0);
-            }
-
-            //Side speed Right
-            if (gamepad1.right_bumper) {
-                fl.setPower(1);
-                bl.setPower(1);
-                fr.setPower(1);
-                br.setPower(1);
-            } else {
-                fl.setPower(0);
-                bl.setPower(0);
-                fr.setPower(0);
-                br.setPower(0);
-            }
-
-            //Side speed Left
-            if (gamepad1.left_bumper) {
-                fl.setPower(-1);
-                bl.setPower(-1);
-                fr.setPower(-1);
-                br.setPower(-1);
-            } else {
-                fl.setPower(0);
-                bl.setPower(0);
                 fr.setPower(0);
                 br.setPower(0);
             }
@@ -150,7 +129,7 @@ public class fieldcentricRyo extends LinearOpMode {
 
             // Intake out
             if (gamepad2.b) { //close all
-                leftWrist.setPosition(0); // always goes up in values
+                leftWrist.setPosition(1); // always goes down in values
                 rightWrist.setPosition(0); // always goes up in values
 
             } else if (gamepad2.a) { //open all
@@ -158,8 +137,8 @@ public class fieldcentricRyo extends LinearOpMode {
                 rightWrist.setPosition(.30);
 
             } else if (gamepad2.x) {
-                leftWrist.setPosition(.60);
-                rightWrist.setPosition(.60);
+                leftWrist.setPosition(.50);
+                rightWrist.setPosition(.50);
 
             }
             // Hang to go up and down
@@ -175,7 +154,7 @@ public class fieldcentricRyo extends LinearOpMode {
                 leftHang.setPower(0);
                 rightHang.setPower(0);
             }
-            //This is the wrist have to tweak it
+            //This is the claw have to tweak it
             if (gamepad2.dpad_right) {
                 claw.setPosition(1);
 
