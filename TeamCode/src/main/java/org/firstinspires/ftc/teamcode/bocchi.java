@@ -117,12 +117,12 @@ public class bocchi extends OpMode {
             rightElbow.setPosition(0); // always goes up in values
 
         } else if (gamepad2.a) { //open all
-            leftElbow.setPosition(.30);   // sigma sigma on the wall whos the skibidiest of them all
-            rightElbow.setPosition(.30);
+            leftElbow.setPosition(.20);   // sigma sigma on the wall whos the skibidiest of them all
+            rightElbow.setPosition(.50);
 
         } else if (gamepad2.x) {
             leftElbow.setPosition(.50);
-            rightElbow.setPosition(.50);
+            rightElbow.setPosition(.90);
 
         }
         // Hang to go up and down

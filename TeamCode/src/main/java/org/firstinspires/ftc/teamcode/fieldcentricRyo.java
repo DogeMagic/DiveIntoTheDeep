@@ -39,10 +39,10 @@ public class fieldcentricRyo extends LinearOpMode {
         // If your robot moves backwards when commanded to go forwards,
         // reverse the left side instead.
         // See the note about this earlier on this page.
-        bl.setDirection(DcMotor.Direction.FORWARD);
-        br.setDirection(DcMotor.Direction.REVERSE);
         fl.setDirection(DcMotor.Direction.REVERSE);
         fr.setDirection(DcMotor.Direction.FORWARD);
+        bl.setDirection(DcMotor.Direction.REVERSE);
+        br.setDirection(DcMotor.Direction.FORWARD);
 
         rightLift.setDirection(DcMotorSimple.Direction.FORWARD);
         leftLift.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -61,9 +61,13 @@ public class fieldcentricRyo extends LinearOpMode {
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
-            double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
+            /*double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
             double x = gamepad1.left_stick_x;
             double rx = gamepad1.right_stick_x;
+            */
+            double y = Math.abs(gamepad1.left_stick_y) > 0.1 ? -gamepad1.left_stick_y : 0;
+            double x = Math.abs(gamepad1.left_stick_x) > 0.1 ? gamepad1.left_stick_x : 0;
+            double rx = Math.abs(gamepad1.right_stick_x) > 0.1 ? gamepad1.right_stick_x : 0;
 
             // This button choice was made so that it is hard to hit on accident,
             // it can be freely changed based on preference.
@@ -71,32 +75,50 @@ public class fieldcentricRyo extends LinearOpMode {
             if (gamepad1.options) {
                 imu.resetYaw();
             }
+           /* telemetry.addData("Yaw (Radians)", imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS));
+            telemetry.update();
+            */
+
+            telemetry.addData("IMU Yaw (Degrees)", imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES));
+            telemetry.update();
 
             double botHeading = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
 
             // Rotate the movement direction counter to the bot's rotation
-            double rotX = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
-            double rotY = x * Math.sin(-botHeading) + y * Math.cos(-botHeading);
+            double rotX = x * Math.cos(botHeading) - y * Math.sin(botHeading);
+            double rotY = x * Math.sin(botHeading) + y * Math.cos(botHeading);
 
-            rotX = rotX * 1.1;  // Counteract imperfect strafing
+            // rotX = rotX * 1.1;  // Counteract imperfect strafing
 
+            rotX *= 1.1;  // Counteract imperfect strafing
             // Denominator is the largest motor power (absolute value) or 1
             // This ensures all the powers maintain the same ratio,
             // but only if at least one is out of the range [-1, 1]
             double denominator = Math.max(Math.abs(rotY) + Math.abs(rotX) + Math.abs(rx), 1);
-            double frontLeftPower = (rotY + rotX + rx) / denominator;
-            double backLeftPower = (rotY - rotX + rx) / denominator;
-            double frontRightPower = (rotY - rotX - rx) / denominator;
-            double backRightPower = (rotY + rotX - rx) / denominator;
+            double frontLeftPower = (rotY - rotX - rx) / denominator; //not
+            double backLeftPower = (rotY - rotX - rx) / denominator;
+            double frontRightPower = (rotY + rotX + rx) / denominator; //not
+            double backRightPower = (rotY - rotX + rx) / denominator;
 
             fl.setPower(frontLeftPower);
             bl.setPower(backLeftPower);
             fr.setPower(frontRightPower);
             br.setPower(backRightPower);
 
+            telemetry.addData("IMU Heading", botHeading);
+            telemetry.addData("Input X", x);
+            telemetry.addData("Input Y", y);
+            telemetry.addData("Rotated X", rotX);
+            telemetry.addData("Rotated Y", rotY);
+            telemetry.addData("FL Power", frontLeftPower);
+            telemetry.addData("BL Power", backLeftPower);
+            telemetry.addData("FR Power", frontRightPower);
+            telemetry.addData("BR Power", backRightPower);
+            telemetry.update();
+
             //Added TeleOp into the field centric if it doesn't work we will go back to og (I changed my mind)
             //Front back Left
-            if (Math.abs(gamepad1.left_stick_y) > .2) {
+            /*if (Math.abs(gamepad1.left_stick_y) > .2) {
                 fl.setPower(gamepad1.left_stick_y * 1);
                 bl.setPower(gamepad1.left_stick_y * -1);
             } else {
@@ -112,6 +134,7 @@ public class fieldcentricRyo extends LinearOpMode {
                 fr.setPower(0);
                 br.setPower(0);
             }
+           */
             //up and down p2
             //Lift
             if (gamepad2.left_bumper) {
