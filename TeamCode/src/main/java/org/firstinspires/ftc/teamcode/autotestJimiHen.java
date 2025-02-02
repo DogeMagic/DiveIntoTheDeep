@@ -149,7 +149,7 @@ public class autotestJimiHen extends LinearOpMode {
 
 
         //Close the claw to grab the object
-        moveServo(leftWrist, 1, 1000);  // 1 = closed position
+        moveServo(claw, 1, 1000);  // 1 = closed position
 
         strafe(0.5, 9.0, "left");  // Strafe left for 9 inches at 50% speed
 
