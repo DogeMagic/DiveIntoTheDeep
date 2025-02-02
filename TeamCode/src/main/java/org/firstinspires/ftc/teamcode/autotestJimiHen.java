@@ -87,8 +87,7 @@ public class autotestJimiHen extends LinearOpMode {
         fl = hardwareMap.get(DcMotor.class, "fl");
         rightLift = hardwareMap.get(DcMotor.class, "RL");
         leftLift = hardwareMap.get(DcMotor.class, "LL");
-        rightClaw = hardwareMap.get(Servo.class, "claw");
-        leftClaw = hardwareMap.get(Servo.class, "claw");
+        claw = hardwareMap.servo.get("claw");
         wrist = hardwareMap.get(Servo.class, "wrist");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
