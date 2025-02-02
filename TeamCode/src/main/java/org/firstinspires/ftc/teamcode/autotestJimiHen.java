@@ -88,7 +88,8 @@ public class autotestJimiHen extends LinearOpMode {
         rightLift = hardwareMap.get(DcMotor.class, "RL");
         leftLift = hardwareMap.get(DcMotor.class, "LL");
         claw = hardwareMap.servo.get("claw");
-        wrist = hardwareMap.get(Servo.class, "wrist");
+        rightElbow = hardwareMap.get(Servo.class, "rightElbow");
+        leftElbow = hardwareMap.get(Servo.class, "rightElbow");(
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
@@ -148,7 +149,7 @@ public class autotestJimiHen extends LinearOpMode {
 
 
         //Close the claw to grab the object
-        moveServo(claw, 1, 1000);  // 1 = closed position
+        moveServo(leftWrist, 1, 1000);  // 1 = closed position
 
         strafe(0.5, 9.0, "left");  // Strafe left for 9 inches at 50% speed
 
