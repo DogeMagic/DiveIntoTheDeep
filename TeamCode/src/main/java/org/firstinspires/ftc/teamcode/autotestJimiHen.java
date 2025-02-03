@@ -30,7 +30,8 @@ public class autotestJimiHen extends LinearOpMode {
      DcMotor         rightLift = null;
      DcMotor         leftLift = null;
      Servo           claw = null;
-     Servo           wrist = null;
+     Servo           rightElbow = null;
+     Servo          leftElbow = null;
      ElapsedTime     runtime = new ElapsedTime();
      IMU             imu   = null;      // Control/Expansion Hub IMU
 
@@ -89,7 +90,7 @@ public class autotestJimiHen extends LinearOpMode {
         leftLift = hardwareMap.get(DcMotor.class, "LL");
         claw = hardwareMap.servo.get("claw");
         rightElbow = hardwareMap.get(Servo.class, "rightElbow");
-        leftElbow = hardwareMap.get(Servo.class, "rightElbow");(
+        leftElbow = hardwareMap.get(Servo.class, "rightElbow");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
@@ -159,14 +160,16 @@ public class autotestJimiHen extends LinearOpMode {
         controllLift(2600, 0.8);  // Move lift to target position (2500 ticks)
 
         //Adjust the wrist for orientation
-        moveServoGradually(wrist, 0.10, 0.38, 1000);  // Gradual wrist movement
+        moveServo(leftElbow, .40, 1000);  // 1 = closed position
+        moveServo(rightElbow, .60, 1000);  // 1 = closed position
         moveServo(claw, 0, 1000);  // 0 = open position
 
         telemetry.addData("Status", "eepy...");
         telemetry.update();
         sleep(3000);  // Pause for 2 seconds
 
-        moveServoGradually(wrist, 0, 0, 1000);  // Gradual wrist movement
+        moveServoGradually(leftElbow, 0, 0, 1000);  // Gradual wrist movement
+        moveServoGradually(rightElbow, 0, 0, 1000);  // Gradual wrist movement
 
         //Lower the lift while keeping the claw closed
         controllLift(0, 0.8);  // Lower lift to bottom position
